@@ -10,6 +10,12 @@ public class MyContract {
         public static final String COLUMN_KONECNA_ZASTAVKA_2 = "konecna_zastavka_2";
     }
 
+    public class Zastavka {
+        public static final String TABLE_NAME = "Zastavky";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_NAZOV = "nazov";
+    }
+
     public class ZastavkyLinky {
         public static final String TABLE_NAME = "ZastavkyLinky";
         public static final String COLUMN_ID = "_id";
@@ -18,9 +24,12 @@ public class MyContract {
         public static final String COLUMN_PORADIE = "poradie";
     }
 
-    public class Zastavka {
-        public static final String TABLE_NAME = "Zastavky";
+    public class Casy {
+        public static final String TABLE_NAME = "Casy";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_NAZOV = "nazov";
+        public static final String COLUMN_ID_ZASTAVKY_LINKY = "id_zastavky_linky";
+        public static final String COLUMN_CAS = "cas";
+        public static final String COLUMN_VIKEND = "vikend"; // tinyint
+        public static final String COLUMN_PRAZDNINY = "prazdniny"; // tinyint
     }
 }

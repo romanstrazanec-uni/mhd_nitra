@@ -47,6 +47,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Line.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Stop.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MyContract.LineStop.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Time.TABLE_NAME);
+        onCreate(db);
     }
 }

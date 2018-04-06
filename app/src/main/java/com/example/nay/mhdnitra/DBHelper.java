@@ -1,10 +1,12 @@
-package com.example.nay.mhdnitra.Entities;
+package com.example.nay.mhdnitra;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nay.mhdnitra.MyContract;
+import com.example.nay.mhdnitra.Entities.*;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 4;
@@ -59,7 +61,57 @@ public class DBHelper extends SQLiteOpenHelper {
             if (i != columns.length - 1) c.append(", ");
         }
 
-        String SQL = "CREATE TABLE " + tableName +  " (" + c + ")";
-        db.execSQL(SQL);
+        String query = "CREATE TABLE " + tableName +  " (" + c + ")";
+        db.execSQL(query);
+    }
+
+    public Cursor getCursor(String tableName){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + tableName;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        db.close();
+        return c;
+    }
+
+    public void addLine(Line l){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Line.COLUMN_LINE, l.getLine());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.Line.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addStop(Stop s){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Stop.COLUMN_NAME, s.getName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.Stop.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addLineStop(LineStop ls){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
+        values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
+        values.put(MyContract.LineStop.COLUMN_NUMBER, ls.getNumber());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.LineStop.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addTime(Time t){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
+        values.put(MyContract.Time.COLUMN_TIME, t.getTime());
+        values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
+        values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.Time.TABLE_NAME, null, values);
+        db.close();
     }
 }

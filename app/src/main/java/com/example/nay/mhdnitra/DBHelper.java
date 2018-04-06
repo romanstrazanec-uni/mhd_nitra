@@ -114,4 +114,28 @@ public class DBHelper extends SQLiteOpenHelper {
         long newRow = db.insert(MyContract.Time.TABLE_NAME, null, values);
         db.close();
     }
+
+    public void deleteLine(long ID){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.Line.TABLE_NAME, MyContract.Line.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
+
+    public void deleteStop(long ID){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.Stop.TABLE_NAME, MyContract.Stop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
+
+    public void deleteLineStop(long ID){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.LineStop.TABLE_NAME, MyContract.LineStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
+
+    public void deleteTime(long ID){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.Time.TABLE_NAME, MyContract.Time.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
 }

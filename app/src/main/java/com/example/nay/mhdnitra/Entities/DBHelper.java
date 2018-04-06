@@ -16,41 +16,50 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String ct = "CREATE TABLE ({0})";
+        final String I = "INTEGER";
+        final String T = "TEXT";
+        final String PK = "INTEGER PRIMARY KEY AUTOINCREMENT";
 
-        String SQL_CREATE_TABLE_LINE = String.format(ct,
-                MyContract.Line.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                MyContract.Line.COLUMN_LINE + " TEXT");
-
-        String SQL_CREATE_TABLE_STOP = String.format(ct,
-                MyContract.Stop.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                MyContract.Stop.COLUMN_NAME + " TEXT");
-
-        String SQL_CREATE_TABLE_LINESTOP = String.format(ct,
-                MyContract.LineStop.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                MyContract.LineStop.COLUMN_ID_LINE + " INTEGER, " +
-                MyContract.LineStop.COLUMN_ID_STOP + " INTEGER, " +
-                MyContract.LineStop.COLUMN_NUMBER + " INTEGER");
-
-        String SQL_CREATE_TABLE_TIME = String.format(ct,
-                MyContract.Time.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                MyContract.Time.COLUMN_ID_LINESTOP + " INTEGER, " +
-                MyContract.Time.COLUMN_TIME + " TEXT, " +
-                MyContract.Time.COLUMN_WEEKEND + " INTEGER, " +
-                MyContract.Time.COLUMN_HOLIDAYS + " INTEGER");
-
-        db.execSQL(SQL_CREATE_TABLE_LINE);
-        db.execSQL(SQL_CREATE_TABLE_STOP);
-        db.execSQL(SQL_CREATE_TABLE_LINESTOP);
-        db.execSQL(SQL_CREATE_TABLE_TIME);
+        createTable(db, MyContract.Line.TABLE_NAME, new String[]{MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE}, new String[]{PK, T});
+        createTable(db, MyContract.Stop.TABLE_NAME, new String[]{MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME}, new String[]{PK, T});
+        createTable(db, MyContract.LineStop.TABLE_NAME,
+                new String[]{MyContract.LineStop.COLUMN_ID,
+                        MyContract.LineStop.COLUMN_ID_LINE,
+                        MyContract.LineStop.COLUMN_ID_STOP,
+                        MyContract.LineStop.COLUMN_NUMBER},
+                new String[]{PK, I, I, I});
+        createTable(db, MyContract.Time.TABLE_NAME,
+                new String[]{MyContract.Time.COLUMN_ID,
+                        MyContract.Time.COLUMN_ID_LINESTOP,
+                        MyContract.Time.COLUMN_TIME,
+                        MyContract.Time.COLUMN_WEEKEND,
+                        MyContract.Time.COLUMN_HOLIDAYS},
+                new String[]{PK, I, T, I, I});
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Line.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Stop.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + MyContract.LineStop.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + MyContract.Time.TABLE_NAME);
+        dropTable(db, MyContract.Line.TABLE_NAME);
+        dropTable(db, MyContract.Stop.TABLE_NAME);
+        dropTable(db, MyContract.LineStop.TABLE_NAME);
+        dropTable(db, MyContract.Time.TABLE_NAME);
         onCreate(db);
+    }
+
+    private void dropTable(SQLiteDatabase db, String tableName){
+        db.execSQL("DROP TABLE IF EXISTS " + tableName);
+    }
+
+    private void createTable(SQLiteDatabase db, String tableName, String[] columns, String[] types){
+        if (columns.length != types.length) return;
+
+        StringBuilder c = new StringBuilder();
+        for(int i = 0; i < columns.length; i++) {
+            c.append(columns[i]).append(" ").append(types[i]);
+            if (i != columns.length - 1) c.append(", ");
+        }
+
+        String SQL = "CREATE TABLE " + tableName +  " (" + c + ")";
+        db.execSQL(SQL);
     }
 }

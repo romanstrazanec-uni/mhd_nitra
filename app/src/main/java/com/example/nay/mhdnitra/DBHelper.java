@@ -115,6 +115,47 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateLine(Line l){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Line.COLUMN_LINE, l.getLine());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.Line.TABLE_NAME, values, MyContract.Line.COLUMN_ID + " = ?", new String[]{String.valueOf(l.getID())});
+        db.close();
+    }
+
+    public void updateStop(Stop s){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Stop.COLUMN_NAME, s.getName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.Stop.TABLE_NAME, values, MyContract.Stop.COLUMN_ID + " = ?", new String[]{String.valueOf(s.getID())});
+        db.close();
+    }
+
+    public void updateLineStop(LineStop ls){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
+        values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
+        values.put(MyContract.LineStop.COLUMN_NUMBER, ls.getNumber());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.LineStop.TABLE_NAME, values, MyContract.LineStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ls.getID())});
+        db.close();
+    }
+
+    public void updateTime(Time t){
+        ContentValues values = new ContentValues();
+        values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
+        values.put(MyContract.Time.COLUMN_TIME, t.getTime());
+        values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
+        values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.Time.TABLE_NAME, values, MyContract.Time.COLUMN_ID + " = ?", new String[]{String.valueOf(t.getID())});
+        db.close();
+    }
+
     public void deleteLine(long ID){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Line.TABLE_NAME, MyContract.Line.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});

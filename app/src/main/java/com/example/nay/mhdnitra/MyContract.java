@@ -2,34 +2,32 @@ package com.example.nay.mhdnitra;
 
 public class MyContract {
 
-    public class Linka {
-        public static final String TABLE_NAME = "Linky";
+    public class Line {
+        public static final String TABLE_NAME = "Lines";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_LINKA = "linka";
-        public static final String COLUMN_KONECNA_ZASTAVKA_1 = "konecna_zastavka_1";
-        public static final String COLUMN_KONECNA_ZASTAVKA_2 = "konecna_zastavka_2";
+        public static final String COLUMN_LINE = "line";
     }
 
-    public class Zastavka {
-        public static final String TABLE_NAME = "Zastavky";
+    public class Stop {
+        public static final String TABLE_NAME = "Stops";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_NAZOV = "nazov";
+        public static final String COLUMN_NAME = "name";
     }
 
-    public class ZastavkyLinky {
-        public static final String TABLE_NAME = "ZastavkyLinky";
+    public class LineStop {
+        public static final String TABLE_NAME = "LineStops";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_ID_LINKA = "id_linka";
-        public static final String COLUMN_ID_ZASTAVKA = "id_zastavka";
-        public static final String COLUMN_PORADIE = "poradie";
+        public static final String COLUMN_ID_LINE = "id_line";
+        public static final String COLUMN_ID_STOP = "id_stop";
+        public static final String COLUMN_NUMBER = "number";
     }
 
-    public class Casy {
-        public static final String TABLE_NAME = "Casy";
+    public class Time {
+        public static final String TABLE_NAME = "Times";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_ID_ZASTAVKY_LINKY = "id_zastavky_linky";
-        public static final String COLUMN_CAS = "cas";
-        public static final String COLUMN_VIKEND = "vikend"; // tinyint
-        public static final String COLUMN_PRAZDNINY = "prazdniny"; // tinyint
+        public static final String COLUMN_ID_LINESTOP = "id_linestop";
+        public static final String COLUMN_TIME = "time";
+        public static final String COLUMN_WEEKEND = "weekend";
+        public static final String COLUMN_HOLIDAYS = "holidays";
     }
 }

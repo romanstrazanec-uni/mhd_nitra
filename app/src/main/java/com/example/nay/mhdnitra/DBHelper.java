@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nay.mhdnitra.Entities.*;
+import com.example.nay.mhdnitra.Entities.Line;
+import com.example.nay.mhdnitra.Entities.LineStop;
+import com.example.nay.mhdnitra.Entities.Stop;
+import com.example.nay.mhdnitra.Entities.Time;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 4;
@@ -178,5 +181,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Time.TABLE_NAME, MyContract.Time.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
+    }
+
+    private void MHDNitra() {
+        String[] lines = new String[]{"1", "2", "4", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+                "15", "16", "17", "18", "19", "21", "22", "24", "25", "26", "27", "30", "32", "33", "C35"};
+        for (int i = 0; i < lines.length; i++) addLine(new Line(i + 1, lines[i]));
     }
 }

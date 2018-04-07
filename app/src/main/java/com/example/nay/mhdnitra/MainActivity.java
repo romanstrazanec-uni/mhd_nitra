@@ -1,12 +1,12 @@
 
 package com.example.nay.mhdnitra;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
-import com.example.nay.mhdnitra.Entities.Line;
 
 public class MainActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
@@ -19,6 +19,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.LineListView);
         connectAdapter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.line_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.line_menu_zastavky:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void connectAdapter(){

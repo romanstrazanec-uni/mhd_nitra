@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lv = findViewById(R.id.LineListView);
+        lv = findViewById(R.id.line_list_view);
         connectAdapter();
         addOnItemClickListener();
     }
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ListView lv = (ListView) findViewById(R.id.LineListView);
+                ListView lv = (ListView) findViewById(R.id.line_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
             }

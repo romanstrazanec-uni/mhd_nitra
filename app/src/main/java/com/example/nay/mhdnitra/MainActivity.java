@@ -1,6 +1,7 @@
 
 package com.example.nay.mhdnitra;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.line_menu_zastavky:
+                startActivity(new Intent(this, StopsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

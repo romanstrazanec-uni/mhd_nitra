@@ -231,92 +231,92 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Cabajská",
                 "Červeňova",
                 "Dolnočermánska",
-                "Golianova",
-                "Hanulova", // 35
+                "Edisonova",
+                "Golianova", // 35
+                "Hanulova",
                 "Hattalova",
                 "Kostolná",
                 "NAD",
-                "Nedbalova",
-                "Nový cintorín", // 40
+                "Nedbalova", // 40
+                "Nový cintorín",
                 "SEC",
                 "Stavebná škola",
                 "Tehelná",
-                "Vodohospodárske stavby",
-                "ZŠ Škultétyho", // 45
+                "Vodohospodárske stavby", // 45
+                "ZŠ Škultétyho",
                 "Železničiarska",
 
                 // Klokočina, Diely
                 "Bizetova",
                 "Čajkovského",
-                "Kmeťova",
-                "Mestská hala", // 50
+                "Kmeťova", // 50
+                "Mestská hala",
                 "Mikovíniho",
                 "Murániho",
                 "Nitrianska",
-                "Partizánska",
-                "Poliklinika Klokočina", // 55
+                "Partizánska", // 55
+                "Poliklinika Klokočina",
                 "Popradská",
                 "Považská",
                 "Pražská",
-                "Rázcestie Kmeťova",
-                "Tokajská", // 60
+                "Rázcestie Kmeťova", // 60
+                "Tokajská",
                 "Viničky",
                 "Zvolenská",
                 "Žilinská",
 
                 // Krškany, Ivánka, Jarok, Branč
-                "Branč",
-                "Branč, Arkuš", // 65
+                "Branč", // 65
+                "Branč, Arkuš",
                 "Branč, kult. dom",
                 "Branč, Kurucká",
                 "Branč, pneuservis",
-                "Branč, Veľkoveská",
-                "Branč, železničná stanica", // 70
+                "Branč, Veľkoveská", // 70
+                "Branč, železničná stanica",
                 "Dvorčianska",
                 "Hájnická",
                 "Horné Krškany",
-                "Idea",
-                "Ivánka pri Nitre, kult. dom", // 75
+                "Idea", // 75
+                "Ivánka pri Nitre, kult. dom",
                 "Ivánka pri Nitre, Luk",
                 "Ivánka pri Nitre, Orolská",
                 "Ivánka pri Nitre, Texiplast",
-                "Ivánka pri Nitre, Žel. stanica",
-                "Jakuba Haška", // 80
+                "Ivánka pri Nitre, Žel. stanica", // 80
+                "Jakuba Haška",
                 "Jarocká",
                 "Jurský dvor",
                 "Kasárne Krškany",
-                "Liaharenský podnik",
-                "Lukov dvor", // 85
+                "Liaharenský podnik", // 85
+                "Lukov dvor",
                 "Mevak",
                 "Murgašova",
                 "Na priehon",
-                "Nitrafrost",
-                "Nitrianske strojárne", // 90
+                "Nitrafrost", // 90
+                "Nitrianske strojárne",
                 "Párovské háje",
                 "Plastika",
                 "Prameň",
-                "Priemyselná",
-                "Rázcestie priemyselná", // 95
+                "Priemyselná", // 95
+                "Rázcestie priemyselná",
                 "Stromová",
                 "Trans Motel",
                 "Záborskeho",
-                "ZŠ Krškany",
+                "ZŠ Krškany", // 100
 
                 // Lužianky
-                "Lužianky Hlohovecká", // 100
+                "Lužianky Hlohovecká",
                 "Lužianky Korytovská",
                 "Lužianky Rastislavova",
                 "Lužianky rázc., Vinárska",
-                "Lužianky VÚŽV",
-                "Lužianky ZŠ", // 105
+                "Lužianky VÚŽV", // 105
+                "Lužianky ZŠ",
                 "Lužianky, Vinárska",
                 "Lužianky, železničná stanica",
 
                 // Mlynárce, Kynek
                 "Bolečkova",
-                "Cintorín Mlynárce",
-                "Dubíkova", // 110
-                "Edisonova",
+                "Cintorín Mlynárce", // 110
+                "Dubíkova",
                 "Ferrenit",
                 "Chotárna",
                 "Kynek",
@@ -407,15 +407,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i = 0; i < stops.length; i++) addStop(new Stop(i + 1, stops[i]));
 
-        long[] line1stops = new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164};
-        for (int i = 0; i < line1stops.length; i++)
-            addLineStop(new LineStop(i + 1, 1, line1stops[i], i + 1));
+        long linestops[][] = new long[][]{
+                new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164}, // 1
+                new long[]{50, 48, 34, 35, 40, 51, 38, 44, 34, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 2
+                new long[]{50, 48, 34, 35, 40, 51, 38, 44, 33, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 175, 168, 5, 6, 7, 5, 9, 10, 3, 4, 1, 2}, // 4
+                new long[]{14, 12, 13, 15, 183, 190, 169, 136, 125, 134, 122, 128, 131, 56, 52, 46, 51, 40, 35, 34}, // 6
+                new long[]{58, 53, 50, 48, 60, 49, 52, 56, 131, 142, 135, 124, 123, 125, 134, 122, 137, 120, 139, 129} // 7
+        };
 
-        long[] line2stops = new long[]{49, 47, 111, 34, 39, 50, 37, 43, 33, 87, 42, 138, 137, 122, 143, 188, 133, 20, 169,
-                147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2};
+        int linestopid = 0;
+        for (int i = 0; i < linestops.length; i++)
+            linestopid = addLineStops(linestops[i], i + 1, linestopid);
+    }
 
-        for (int i = 0; i < line2stops.length; i++)
-            addLineStop(new LineStop(i + 1 + line1stops.length, 2, line2stops[i], i + 1));
-
+    private int addLineStops(long[] stops, long idline, int linestopid) {
+        for (int i = 0; i < stops.length; i++)
+            addLineStop(new LineStop(i + 1 + linestopid, idline, stops[i], i + 1));
+        return linestopid + stops.length;
     }
 }

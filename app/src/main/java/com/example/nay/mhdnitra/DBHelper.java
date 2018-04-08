@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.nay.mhdnitra.Entities.FavouriteLine;
+import com.example.nay.mhdnitra.Entities.FavouriteStop;
 import com.example.nay.mhdnitra.Entities.Line;
 import com.example.nay.mhdnitra.Entities.LineStop;
 import com.example.nay.mhdnitra.Entities.Stop;
@@ -40,6 +42,10 @@ public class DBHelper extends SQLiteOpenHelper {
                         MyContract.Time.COLUMN_WEEKEND,
                         MyContract.Time.COLUMN_HOLIDAYS},
                 new String[]{PK, I, T, I, I});
+        createTable(db, MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.FavouriteLine.COLUMN_ID_LINE},
+                new String[]{PK, I});
+        createTable(db, MyContract.FavouriteStop.TABLE_NAME, new String[]{MyContract.FavouriteStop.COLUMN_ID, MyContract.FavouriteStop.COLUMN_ID_STOP},
+                new String[]{PK, I});
     }
 
     @Override
@@ -48,6 +54,8 @@ public class DBHelper extends SQLiteOpenHelper {
         dropTable(db, MyContract.Stop.TABLE_NAME);
         dropTable(db, MyContract.LineStop.TABLE_NAME);
         dropTable(db, MyContract.Time.TABLE_NAME);
+        dropTable(db, MyContract.FavouriteLine.TABLE_NAME);
+        dropTable(db, MyContract.FavouriteStop.TABLE_NAME);
         onCreate(db);
     }
 
@@ -122,6 +130,24 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addFavouriteLine(FavouriteLine fl) {
+        ContentValues values = new ContentValues();
+        values.put(MyContract.FavouriteLine.COLUMN_ID_LINE, fl.getIDLine());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.FavouriteLine.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addFavouriteStop(FavouriteStop fs) {
+        ContentValues values = new ContentValues();
+        values.put(MyContract.FavouriteStop.COLUMN_ID_STOP, fs.getIDStop());
+
+        SQLiteDatabase db = getWritableDatabase();
+        long newRow = db.insert(MyContract.FavouriteStop.TABLE_NAME, null, values);
+        db.close();
+    }
+
     public void updateLine(Line l){
         ContentValues values = new ContentValues();
         values.put(MyContract.Line.COLUMN_LINE, l.getLine());
@@ -163,6 +189,26 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateFavouriteLine(FavouriteLine fl) {
+        ContentValues values = new ContentValues();
+        values.put(MyContract.FavouriteLine.COLUMN_ID_LINE, fl.getIDLine());
+        ;
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.FavouriteLine.TABLE_NAME, values, MyContract.FavouriteLine.COLUMN_ID + " = ?", new String[]{String.valueOf(fl.getID())});
+        db.close();
+    }
+
+    public void updateFavouriteStop(FavouriteStop fs) {
+        ContentValues values = new ContentValues();
+        values.put(MyContract.FavouriteStop.COLUMN_ID_STOP, fs.getIDStop());
+        ;
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(MyContract.FavouriteStop.TABLE_NAME, values, MyContract.FavouriteStop.COLUMN_ID + " = ?", new String[]{String.valueOf(fs.getID())});
+        db.close();
+    }
+
     public void deleteLine(long ID){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Line.TABLE_NAME, MyContract.Line.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
@@ -184,6 +230,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public void deleteTime(long ID){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Time.TABLE_NAME, MyContract.Time.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
+
+    public void deleteFavouriteLine(long ID) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.FavouriteLine.TABLE_NAME, MyContract.FavouriteLine.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.close();
+    }
+
+    public void deleteFavouriteStop(long ID) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MyContract.FavouriteStop.TABLE_NAME, MyContract.FavouriteStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 

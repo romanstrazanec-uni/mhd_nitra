@@ -30,4 +30,16 @@ public class MyContract {
         public static final String COLUMN_WEEKEND = "weekend";
         public static final String COLUMN_HOLIDAYS = "holidays";
     }
+
+    public class FavouriteLine {
+        public static final String TABLE_NAME = "FavouriteLines";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_ID_LINE = "id_line";
+    }
+
+    public class FavouriteStop {
+        public static final String TABLE_NAME = "FavouriteStops";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_ID_STOP = "id_stop";
+    }
 }

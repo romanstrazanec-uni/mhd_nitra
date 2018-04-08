@@ -1,10 +1,13 @@
 
 package com.example.nay.mhdnitra;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.LineListView);
         connectAdapter();
+        addOnItemClickListener();
     }
 
     @Override
@@ -41,5 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);
+    }
+
+    private void addOnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                ListView lv = (ListView) findViewById(R.id.LineListView);
+                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                c.moveToPosition(position);
+            }
+        });
     }
 }

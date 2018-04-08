@@ -3,6 +3,13 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="horizontal">
 
+    <TextView
+        android:id="@+id/favourite_line_id"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:width="100dp"
+        android:visibility="gone" />
+
     <TextView android:id="@+id/line_id"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"

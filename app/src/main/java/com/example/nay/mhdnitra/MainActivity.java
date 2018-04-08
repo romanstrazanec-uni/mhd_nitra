@@ -36,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.line_menu_zastavky:
+            case R.id.line_menu_stops:
                 startActivity(new Intent(this, StopsActivity.class));
+                return true;
+            case R.id.line_menu_favourites:
+                startActivity(new Intent(this, FavouriteLinesActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

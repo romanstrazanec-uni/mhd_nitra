@@ -1,8 +1,10 @@
 package com.example.nay.mhdnitra;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
         lv = findViewById(R.id.favourite_line_list_view);
         connectAdapter();
         addOnItemClickListener();
+        addOnItemLongClickListener();
     }
 
     private void connectAdapter() {
@@ -42,6 +45,36 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                 Intent i = new Intent(FavouriteLinesActivity.this, LineActivity.class);
                 i.putExtra("line_id", c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID)));
                 startActivity(i);
+            }
+        });
+    }
+
+    private void addOnItemLongClickListener() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+
+                builder.setMessage("Odobrať z obľúbených?").setTitle("Obľúbené");
+                builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                        c.moveToPosition(position);
+                        long ID = c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID));
+                        dbh.deleteFavouriteLine(ID);
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.show();
+                return false;
             }
         });
     }

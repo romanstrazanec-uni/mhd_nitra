@@ -68,9 +68,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public Cursor getCursor(String tableName){
+    public Cursor getCursor(String tableName, String join, String lefton, String righton, String where, String orderby) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + tableName;
+        if (join != null && lefton != null && righton != null)
+            query += " JOIN " + join + " ON " + tableName + "." + lefton + " = " + join + "." + righton;
+        if (where != null) query += " WHERE " + where;
+        if (orderby != null) query += " ORDER BY " + orderby;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         db.close();
@@ -183,7 +187,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    private void MHDNitra() {
+    public void MHDNitra() {
         String[] lines = new String[]{"1", "2", "4", "6", "7", "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "21", "22", "24", "25", "26", "27", "30", "32", "33", "C35"};
         for (int i = 0; i < lines.length; i++) addLine(new Line(i + 1, lines[i]));
@@ -194,213 +198,224 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Drážovce",
                 "PD Drážovce",
                 "Pri kríži",
-                "Priemyselný park I",
+                "Priemyselný park I", // 5
                 "Priemyselný park II",
                 "Priemyselný park III",
                 "Priemyselný park IV",
                 "Priemyselný park V",
-                "Rázcestie priemyselný park",
+                "Rázcestie priemyselný park", // 10
 
                 // Chrenová, Janíkovce
                 "Atletický štadión",
                 "Bohúňová",
                 "Ďurčanského",
                 "Gorazdova",
-                "Chrenovský cintorín",
+                "Chrenovský cintorín", // 15
                 "Janíkovce",
                 "Janíkovská cesta",
                 "Letecká",
                 "Levická",
-                "Lomnická",
+                "Lomnická", //20
                 "Malé Janíkovce I",
                 "Malé Janíkovce II",
                 "Mikov dvor",
                 "Plynárenská",
-                "Poliklinika Chrenová",
+                "Poliklinika Chrenová", // 25
                 "Sitnianska",
                 "Slamkova",
                 "Vinohrady Chrenová",
                 "Výstavisko",
-                "ZŠ Janíkovce",
+                "ZŠ Janíkovce", // 30
 
                 // Čermáň
                 "Cabajská",
                 "Červeňova",
                 "Dolnočermánska",
                 "Golianova",
-                "Hanulova",
+                "Hanulova", // 35
                 "Hattalova",
                 "Kostolná",
                 "NAD",
                 "Nedbalova",
-                "Nový cintorín",
+                "Nový cintorín", // 40
                 "SEC",
                 "Stavebná škola",
                 "Tehelná",
                 "Vodohospodárske stavby",
-                "ZŠ Škultétyho",
+                "ZŠ Škultétyho", // 45
                 "Železničiarska",
 
                 // Klokočina, Diely
                 "Bizetova",
                 "Čajkovského",
                 "Kmeťova",
-                "Mestská hala",
+                "Mestská hala", // 50
                 "Mikovíniho",
                 "Murániho",
                 "Nitrianska",
                 "Partizánska",
-                "Poliklinika Klokočina",
+                "Poliklinika Klokočina", // 55
                 "Popradská",
                 "Považská",
                 "Pražská",
                 "Rázcestie Kmeťova",
-                "Tokajská",
+                "Tokajská", // 60
                 "Viničky",
                 "Zvolenská",
                 "Žilinská",
 
                 // Krškany, Ivánka, Jarok, Branč
                 "Branč",
-                "Branč, Arkuš",
+                "Branč, Arkuš", // 65
                 "Branč, kult. dom",
                 "Branč, Kurucká",
                 "Branč, pneuservis",
                 "Branč, Veľkoveská",
-                "Branč, železničná stanica",
+                "Branč, železničná stanica", // 70
                 "Dvorčianska",
                 "Hájnická",
                 "Horné Krškany",
                 "Idea",
-                "Ivánka pri Nitre, kult. dom",
+                "Ivánka pri Nitre, kult. dom", // 75
                 "Ivánka pri Nitre, Luk",
                 "Ivánka pri Nitre, Orolská",
                 "Ivánka pri Nitre, Texiplast",
                 "Ivánka pri Nitre, Žel. stanica",
-                "Jakuba Haška",
+                "Jakuba Haška", // 80
                 "Jarocká",
                 "Jurský dvor",
                 "Kasárne Krškany",
                 "Liaharenský podnik",
-                "Lukov dvor",
+                "Lukov dvor", // 85
                 "Mevak",
                 "Murgašova",
                 "Na priehon",
                 "Nitrafrost",
-                "Nitrianske strojárne",
+                "Nitrianske strojárne", // 90
                 "Párovské háje",
                 "Plastika",
                 "Prameň",
                 "Priemyselná",
-                "Rázcestie priemyselná",
+                "Rázcestie priemyselná", // 95
                 "Stromová",
                 "Trans Motel",
                 "Záborskeho",
                 "ZŠ Krškany",
 
                 // Lužianky
-                "Lužianky Hlohovecká",
+                "Lužianky Hlohovecká", // 100
                 "Lužianky Korytovská",
                 "Lužianky Rastislavova",
                 "Lužianky rázc., Vinárska",
                 "Lužianky VÚŽV",
-                "Lužianky ZŠ",
+                "Lužianky ZŠ", // 105
                 "Lužianky, Vinárska",
                 "Lužianky, železničná stanica",
 
                 // Mlynárce, Kynek
                 "Bolečkova",
                 "Cintorín Mlynárce",
-                "Dubíkova",
+                "Dubíkova", // 110
                 "Edisonova",
                 "Ferrenit",
                 "Chotárna",
                 "Kynek",
-                "NIPEK",
+                "NIPEK", // 115
                 "Potočná",
                 "Rastislavova",
                 "Rybárska",
                 "Železničná zastávka Mlynárce",
 
                 // Staré mesto
-                "8. mája",
+                "8. mája", // 120
                 "Braneckého",
                 "CENTRUM",
                 "Divadlo Andreja Bagara",
                 "Ďurková",
-                "Fraňa Mojtu",
+                "Fraňa Mojtu", // 125
                 "Hlavná",
                 "Hodžova",
                 "Hollého",
                 "Kalvária",
-                "Kasalova",
+                "Kasalova", // 130
                 "Kavcova",
                 "Mestský park",
                 "Nábrežie mládeže",
                 "Palárikova",
-                "Párovská",
+                "Párovská", // 135
                 "Predmostie",
                 "Rázcestie Autobusová stanica",
                 "Rázcestie Železničná stanica",
                 "Rázusová",
-                "Správa ciest",
+                "Správa ciest", // 140
                 "Špitálska",
                 "Štúrová",
                 "Univerzity",
                 "Wilsonovo nábrežie",
-                "Záhradná",
+                "Záhradná", // 145
                 "Železničná stanica Nitra",
 
                 // Zobor, Hrnčiarovce, Štitáre
                 "Amfiteáter",
                 "Drozdí chodník",
                 "Hornozoborská",
-                "Hrnčiarovce",
+                "Hrnčiarovce", // 150
                 "Hrnčiarovce Krajná",
                 "Hrnčiarovce pod Sokolom",
                 "Hrnčiarovce Šopronská",
                 "Hrnčiarovce Vinohrady",
-                "Hrnčiarovce ZŠ",
+                "Hrnčiarovce ZŠ", // 155
                 "Chmeľová dolina",
                 "Jánskeho",
                 "Klinčeková",
                 "Lanovka",
-                "Martinská dolina",
+                "Martinská dolina", // 160
                 "Metodova",
                 "Moskovská",
                 "Muškátová",
                 "Nemocnica Zobor",
-                "Orechová",
+                "Orechová", // 165
                 "Orgovánová",
                 "Panská dolina",
                 "Pod Lupkou",
                 "Pod Zoborom",
-                "Podhájska",
+                "Podhájska", // 170
                 "Rázcestie Metodova",
                 "Rázcestie Moskovská",
                 "Rázcestie Panská dolina",
                 "Strmá",
-                "Šindolka",
+                "Šindolka", // 175
                 "Šindolka, Dolnohorská",
                 "Štitáre",
                 "Štitáre ku Gáborke",
                 "Štitáre Šoproš",
-                "Turistická",
+                "Turistická", // 180
                 "Urbancova",
                 "Úzka",
                 "Vašínova",
                 "Veterinárska",
-                "Vinárske závody",
+                "Vinárske závody", // 185
                 "Zariadenie pre seniorov Zobor",
                 "ZŠ pod Zoborom",
 
                 // Obchodné centrá
                 "Andreja Hlinkum, Centro",
                 "Hypermarket TESCO",
-                "Chrenovská MAX",
+                "Chrenovská MAX", // 190
                 "METRO"
         };
 
         for (int i = 0; i < stops.length; i++) addStop(new Stop(i + 1, stops[i]));
+
+        long[] line1stops = new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164};
+        for (int i = 0; i < line1stops.length; i++)
+            addLineStop(new LineStop(i + 1, 1, line1stops[i], i + 1));
+
+        long[] line2stops = new long[]{49, 47, 111, 34, 39, 50, 37, 43, 33, 87, 42, 138, 137, 122, 143, 188, 133, 20, 169,
+                147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2};
+
+        for (int i = 0; i < line2stops.length; i++)
+            addLineStop(new LineStop(i + 1 + line1stops.length, 2, line2stops[i], i + 1));
+
     }
 }

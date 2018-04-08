@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        deleteDatabase("mhd");
+        dbh.MHDNitra();
         lv = findViewById(R.id.line_list_view);
         connectAdapter();
         addOnItemClickListener();
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectAdapter(){
-        sca = new SimpleCursorAdapter(this, R.layout.line_list_layout, dbh.getCursor(MyContract.Line.TABLE_NAME),
+        sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
+                dbh.getCursor(MyContract.Line.TABLE_NAME, null, null, null, null, null),
                 new String[]{MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);
@@ -53,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ListView lv = (ListView) findViewById(R.id.line_list_view);
+                ListView lv = findViewById(R.id.line_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
+                Intent i = new Intent(MainActivity.this, LineActivity.class);
+                i.putExtra("line_id", c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID)));
+                startActivity(i);
             }
         });
     }

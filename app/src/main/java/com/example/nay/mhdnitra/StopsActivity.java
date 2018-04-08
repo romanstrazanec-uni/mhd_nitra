@@ -19,7 +19,7 @@ public class StopsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stops);
-        lv = (ListView) findViewById(R.id.stops_list_view);
+        lv = findViewById(R.id.stops_list_view);
         connectAdapter();
         addOnItemClickListener();
     }
@@ -41,7 +41,8 @@ public class StopsActivity extends AppCompatActivity {
     }
 
     public void connectAdapter() {
-        sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout, dbh.getCursor(MyContract.Stop.TABLE_NAME),
+        sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout,
+                dbh.getCursor(MyContract.Stop.TABLE_NAME, null, null, null, null, null),
                 new String[]{MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
@@ -51,7 +52,7 @@ public class StopsActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                ListView lv = (ListView) findViewById(R.id.stops_list_view);
+                ListView lv = findViewById(R.id.stops_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
             }

@@ -43,8 +43,8 @@ public class LineActivity extends AppCompatActivity {
 
     public void connectAdapter(String order) {
         sca = new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
-                dbh.getCursor(MyContract.LineStop.TABLE_NAME, MyContract.Stop.TABLE_NAME,
-                        MyContract.LineStop.COLUMN_ID_STOP, MyContract.Stop.COLUMN_ID,
+                dbh.getCursor(MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
+                        new String[]{MyContract.LineStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
                         MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId, MyContract.LineStop.COLUMN_NUMBER + order),
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.line_stop_id, R.id.stop_name}, 0);

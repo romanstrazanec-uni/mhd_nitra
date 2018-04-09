@@ -76,11 +76,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public Cursor getCursor(String tableName, String join, String lefton, String righton, String where, String orderby) {
+    public Cursor getCursor(String from, String[] join, String[] lefton, String[] righton, String where, String orderby) {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + tableName;
-        if (join != null && lefton != null && righton != null)
-            query += " JOIN " + join + " ON " + tableName + "." + lefton + " = " + join + "." + righton;
+        String query = "SELECT * FROM " + from;
+        if (join != null && lefton != null && righton != null && join.length == lefton.length && lefton.length == righton.length) {
+            String leftjoin = from;
+            for (int i = 0; i < join.length; i++) {
+                query += " JOIN " + join[i] + " ON " + leftjoin + "." + lefton[i] + " = " + join[i] + "." + righton[i];
+                leftjoin = join[i];
+            }
+        }
+
         if (where != null) query += " WHERE " + where;
         if (orderby != null) query += " ORDER BY " + orderby;
         Cursor c = db.rawQuery(query, null);

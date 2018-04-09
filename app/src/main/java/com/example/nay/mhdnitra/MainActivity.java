@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ListView lv = findViewById(R.id.line_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
                 Intent i = new Intent(MainActivity.this, LineActivity.class);
@@ -80,17 +79,31 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long l) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
 
-                builder.setMessage("Pridať medzi obľúbené?").setTitle("Obľúbené");
-                builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
-                        c.moveToPosition(position);
-                        long ID = c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID));
-                        dbh.addFavouriteLine(new FavouriteLine(0, ID));
-                        dialogInterface.dismiss();
-                    }
-                });
+                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                final long ID = c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID));
+
+                c = dbh.getCursor(MyContract.FavouriteLine.TABLE_NAME, null, null, null,
+                        MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null);
+                if (c.moveToFirst()) {
+                    builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
+                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dbh.deleteFavouriteLine(ID);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                } else {
+                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridanie");
+                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dbh.addFavouriteLine(new FavouriteLine(0, ID));
+                            dialogInterface.dismiss();
+                        }
+                    });
+                }
                 builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

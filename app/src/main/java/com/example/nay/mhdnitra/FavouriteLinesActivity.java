@@ -29,7 +29,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
     private void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
                 dbh.getCursor(MyContract.FavouriteLine.TABLE_NAME, MyContract.Line.TABLE_NAME,
-                        MyContract.FavouriteLine.COLUMN_ID_LINE, MyContract.Line.COLUMN_ID, null, null),
+                        MyContract.FavouriteLine.COLUMN_ID_LINE, MyContract.Line.COLUMN_ID, null, MyContract.Line.COLUMN_LINE),
                 new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.favourite_line_id, R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);
@@ -39,7 +39,6 @@ public class FavouriteLinesActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ListView lv = findViewById(R.id.favourite_line_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
                 Intent i = new Intent(FavouriteLinesActivity.this, LineActivity.class);
@@ -63,6 +62,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                         c.moveToPosition(position);
                         long ID = c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID));
                         dbh.deleteFavouriteLine(ID);
+                        connectAdapter();
                         dialogInterface.dismiss();
                     }
                 });

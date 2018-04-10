@@ -19,7 +19,8 @@
         <activity android:name=".LineActivity" />
         <activity android:name=".StopsActivity" />
         <activity android:name=".TimesActivity" />
-        <activity android:name=".FavouriteLinesActivity"></activity>
+        <activity android:name=".FavouriteLinesActivity" />
+        <activity android:name=".LineStopsActivity"></activity>
     </application>
 
 </manifest>

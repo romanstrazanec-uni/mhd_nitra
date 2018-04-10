@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".LineActivity">
+
+    <TextView
+        android:id="@+id/line_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/line_stop_list_view"

@@ -1,16 +1,20 @@
 package com.example.nay.mhdnitra;
 
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class LineActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
+    TextView tv;
     long lineId;
     String order = "";
 
@@ -19,6 +23,8 @@ public class LineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line);
         lv = findViewById(R.id.line_stop_list_view);
+        tv = findViewById(R.id.line_text_view);
+        tv.setBackgroundColor(Color.rgb(190, 190, 220));
         lineId = getIntent().getLongExtra("line_id", 0);
         connectAdapter(order);
     }
@@ -49,6 +55,8 @@ public class LineActivity extends AppCompatActivity {
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.line_stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
+        Cursor c = dbh.getCursor(MyContract.Line.TABLE_NAME, null, null, null, MyContract.Line.COLUMN_ID + "=" + lineId, null);
+        tv.setText("Trasa linky " + c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE)));
     }
 
 }

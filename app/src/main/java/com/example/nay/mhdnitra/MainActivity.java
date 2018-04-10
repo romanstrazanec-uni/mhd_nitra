@@ -4,6 +4,7 @@ package com.example.nay.mhdnitra;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.example.nay.mhdnitra.Entities.FavouriteLine;
 
@@ -27,7 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         deleteDatabase("mhd");
         dbh.MHDNitra();
+
         lv = findViewById(R.id.line_list_view);
+        TextView tv = findViewById(R.id.main_text_view);
+        tv.setBackgroundColor(Color.rgb(255, 230, 0));
+        tv.setTextColor(Color.BLACK);
+        tv.setText("Linka");
+
         connectAdapter();
         addOnItemClickListener();
         addOnItemLongClickListener();

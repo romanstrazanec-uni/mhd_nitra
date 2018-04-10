@@ -1,6 +1,7 @@
 package com.example.nay.mhdnitra;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class StopsActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
@@ -19,7 +21,13 @@ public class StopsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stops);
+
         lv = findViewById(R.id.stops_list_view);
+        TextView tv = findViewById(R.id.stops_text_view);
+        tv.setBackgroundColor(Color.rgb(255, 230, 0));
+        tv.setTextColor(Color.BLACK);
+        tv.setText("Zastávka");
+
         connectAdapter();
         addOnItemClickListener();
     }

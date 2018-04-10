@@ -27,12 +27,12 @@ public class LineStopsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_line_stops);
 
         Intent i = getIntent();
-        stopId = i.getLongExtra("line_stop_id", 0);
+        stopId = i.getLongExtra("stops_id", 0);
 
         lv = findViewById(R.id.line_stops_list_view);
         TextView tv = findViewById(R.id.line_stops_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
-        tv.setText("Zastávka " + i.getStringExtra("title"));
+        tv.setText(String.format("Zastávka %s", i.getStringExtra("title")));
 
         connectAdapter();
         addOnItemClickListener();

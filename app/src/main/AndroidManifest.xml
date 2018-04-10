@@ -20,7 +20,8 @@
         <activity android:name=".StopsActivity" />
         <activity android:name=".TimesActivity" />
         <activity android:name=".FavouriteLinesActivity" />
-        <activity android:name=".LineStopsActivity"></activity>
+        <activity android:name=".LineStopsActivity" />
+        <activity android:name=".FavouriteStopsActivity" />
     </application>
 
 </manifest>

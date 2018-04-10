@@ -5,6 +5,13 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/favourite_stop_id"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:width="100dp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/stop_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

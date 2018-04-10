@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/stop_menu_linky"
+        android:id="@+id/stop_menu_lines"
         android:title="Linky" />
+    <item
+        android:id="@+id/stop_menu_favourites"
+        android:title="Obľúbené" />
 </menu>

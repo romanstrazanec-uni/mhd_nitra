@@ -46,8 +46,11 @@ public class StopsActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.stop_menu_linky:
+            case R.id.stop_menu_lines:
                 finish();
+                return true;
+            case R.id.stop_menu_favourites:
+                startActivity(new Intent(this, FavouriteStopsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -70,7 +73,7 @@ public class StopsActivity extends AppCompatActivity {
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
                 Intent i = new Intent(StopsActivity.this, LineStopsActivity.class);
-                i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID)));
+                i.putExtra("stops_id", c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID)));
                 i.putExtra("title", c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME)));
                 startActivity(i);
             }

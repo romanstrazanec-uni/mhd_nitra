@@ -262,7 +262,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteFavouriteStop(long ID) {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(MyContract.FavouriteStop.TABLE_NAME, MyContract.FavouriteStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.delete(MyContract.FavouriteStop.TABLE_NAME, MyContract.FavouriteStop.COLUMN_ID_STOP + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 

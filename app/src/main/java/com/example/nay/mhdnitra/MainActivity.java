@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            dbh.addFavouriteLine(new FavouriteLine(0, ID));
+                            dbh.addFavouriteLine(new FavouriteLine(1, ID));
                             dialogInterface.dismiss();
                         }
                     });

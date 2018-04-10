@@ -241,7 +241,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteFavouriteLine(long ID) {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(MyContract.FavouriteLine.TABLE_NAME, MyContract.FavouriteLine.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
+        db.delete(MyContract.FavouriteLine.TABLE_NAME, MyContract.FavouriteLine.COLUMN_ID_LINE + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 

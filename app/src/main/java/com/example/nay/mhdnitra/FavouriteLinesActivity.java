@@ -55,13 +55,14 @@ public class FavouriteLinesActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long l) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
 
-                builder.setMessage("Odobrať z obľúbených?").setTitle("Obľúbené");
+                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteLine.COLUMN_ID));
+
+                builder.setMessage("Odobrať z obľúbených?" + ID).setTitle("Obľúbené");
                 builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
-                        c.moveToPosition(position);
-                        long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteLine.COLUMN_ID));
                         dbh.deleteFavouriteLine(ID);
                         connectAdapter();
                         dialogInterface.dismiss();

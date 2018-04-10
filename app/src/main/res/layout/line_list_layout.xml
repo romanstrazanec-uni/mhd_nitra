@@ -13,8 +13,8 @@
     <TextView android:id="@+id/line_id"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:width="100dp"/>
+        android:width="100dp"
+        android:visibility="gone" />
 
     <TextView android:id="@+id/line"
         android:layout_width="wrap_content"

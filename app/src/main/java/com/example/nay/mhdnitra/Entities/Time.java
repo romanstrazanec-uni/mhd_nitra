@@ -3,14 +3,16 @@ package com.example.nay.mhdnitra.Entities;
 public class Time {
     private long ID;
     private long IDLineStop;
-    private String time;
+    private int hour;
+    private int minute;
     private int weekend;
     private int holidays;
 
-    public Time(long ID, long IDLineStop, String time, int weekend, int holidays) {
+    public Time(long ID, long IDLineStop, int hour, int minute, int weekend, int holidays) {
         this.ID = ID;
         this.IDLineStop = IDLineStop;
-        this.time = time;
+        this.hour = hour;
+        this.minute = minute;
         this.weekend = weekend;
         this.holidays = holidays;
     }
@@ -23,8 +25,12 @@ public class Time {
         return IDLineStop;
     }
 
-    public String getTime() {
-        return time;
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
     }
 
     public int getWeekend() {
@@ -43,8 +49,12 @@ public class Time {
         this.IDLineStop = IDLineStop;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
     }
 
     public void setWeekend(int weekend) {

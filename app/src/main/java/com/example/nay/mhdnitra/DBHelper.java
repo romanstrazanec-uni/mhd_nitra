@@ -33,15 +33,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{MyContract.LineStop.COLUMN_ID,
                         MyContract.LineStop.COLUMN_ID_LINE,
                         MyContract.LineStop.COLUMN_ID_STOP,
-                        MyContract.LineStop.COLUMN_NUMBER},
-                new String[]{PK, I, I, I});
+                        MyContract.LineStop.COLUMN_NUMBER,
+                        MyContract.LineStop.COLUMN_DIRECTION},
+                new String[]{PK, I, I, I, I});
         createTable(db, MyContract.Time.TABLE_NAME,
                 new String[]{MyContract.Time.COLUMN_ID,
                         MyContract.Time.COLUMN_ID_LINESTOP,
-                        MyContract.Time.COLUMN_TIME,
+                        MyContract.Time.COLUMN_HOUR,
+                        MyContract.Time.COLUMN_MINUTE,
                         MyContract.Time.COLUMN_WEEKEND,
                         MyContract.Time.COLUMN_HOLIDAYS},
-                new String[]{PK, I, T, I, I});
+                new String[]{PK, I, I, I, I, I});
         createTable(db, MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.FavouriteLine.COLUMN_ID_LINE},
                 new String[]{PK, I});
         createTable(db, MyContract.FavouriteStop.TABLE_NAME, new String[]{MyContract.FavouriteStop.COLUMN_ID, MyContract.FavouriteStop.COLUMN_ID_STOP},
@@ -142,7 +144,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addTime(SQLiteDatabase db, Time t) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
-        values.put(MyContract.Time.COLUMN_TIME, t.getTime());
+        values.put(MyContract.Time.COLUMN_HOUR, t.getHour());
+        values.put(MyContract.Time.COLUMN_MINUTE, t.getMinute());
         values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
         values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
 
@@ -205,7 +208,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateTime(Time t){
         ContentValues values = new ContentValues();
         values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
-        values.put(MyContract.Time.COLUMN_TIME, t.getTime());
+        values.put(MyContract.Time.COLUMN_MINUTE, t.getMinute());
+        values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
         values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
         values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
 

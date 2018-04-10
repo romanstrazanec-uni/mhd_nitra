@@ -20,16 +20,17 @@ public class MyContract {
         public static final String COLUMN_ID_LINE = "id_line";
         public static final String COLUMN_ID_STOP = "id_stop";
         public static final String COLUMN_NUMBER = "number";
-        public static final String COLUMN_DIRECTION = "direction";
+        public static final String COLUMN_DIRECTION = "direction"; // [0,1]
     }
 
     public class Time {
         public static final String TABLE_NAME = "Times";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_ID_LINESTOP = "id_linestop";
-        public static final String COLUMN_TIME = "time";
-        public static final String COLUMN_WEEKEND = "weekend";
-        public static final String COLUMN_HOLIDAYS = "holidays";
+        public static final String COLUMN_HOUR = "hour";
+        public static final String COLUMN_MINUTE = "minute";
+        public static final String COLUMN_WEEKEND = "weekend"; // 0 - only work day, 1 - only weekend, 2 - every day
+        public static final String COLUMN_HOLIDAYS = "holidays"; // 0 - only not holidays, 1 - only holidays, 2 - every day
     }
 
     public class FavouriteLine {

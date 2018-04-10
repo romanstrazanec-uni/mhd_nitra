@@ -67,7 +67,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteLine.COLUMN_ID));
 
-                builder.setMessage("Odobrať z obľúbených?" + ID).setTitle("Obľúbené");
+                builder.setMessage("Odobrať z obľúbených?" + ID).setTitle("Odstrániť");
                 builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

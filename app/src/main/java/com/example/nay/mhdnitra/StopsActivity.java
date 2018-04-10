@@ -93,7 +93,7 @@ public class StopsActivity extends AppCompatActivity {
                 c = dbh.getCursor(null, MyContract.FavouriteStop.TABLE_NAME, null, null, null,
                         MyContract.FavouriteStop.COLUMN_ID_STOP + " = " + ID, null, null);
                 if (c.moveToFirst()) {
-                    builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
+                    builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -102,7 +102,7 @@ public class StopsActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridanie");
+                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridať");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

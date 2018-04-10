@@ -68,7 +68,7 @@ public class FavouriteStopsActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteStop.COLUMN_ID));
 
-                builder.setMessage("Odobrať z obľúbených?").setTitle("Obľúbené");
+                builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
                 builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 c = dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, null, null, null,
                         MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null, null);
                 if (c.moveToFirst()) {
-                    builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
+                    builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridanie");
+                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridať");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

@@ -46,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{PK, I});
         createTable(db, MyContract.FavouriteStop.TABLE_NAME, new String[]{MyContract.FavouriteStop.COLUMN_ID, MyContract.FavouriteStop.COLUMN_ID_STOP},
                 new String[]{PK, I});
+        MHDNitra(db);
     }
 
     @Override
@@ -78,68 +79,74 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getCursor(String[] select, String from, String[] join, String[] lefton, String[] righton, String where, String groupby, String orderby) {
         SQLiteDatabase db = getWritableDatabase();
-        String selection = "";
+        StringBuilder selection = new StringBuilder();
         if (select != null) {
-            for (String s : select) selection += s + ",";
-        } else selection = "*,";
+            for (String s : select) selection.append(s).append(",");
+        } else selection = new StringBuilder("*,");
 
-        String query = "SELECT " + selection.substring(0, selection.length() - 1) + " FROM " + from;
+        StringBuilder query = new StringBuilder("SELECT " + selection.substring(0, selection.length() - 1) + " FROM " + from);
 
         if (join != null && lefton != null && righton != null && join.length == lefton.length && lefton.length == righton.length) {
             String leftjoin = from;
             for (int i = 0; i < join.length; i++) {
-                query += " JOIN " + join[i] + " ON " + leftjoin + "." + lefton[i] + " = " + join[i] + "." + righton[i];
+                query.append(" JOIN ").append(join[i]).append(" ON ").append(leftjoin).append(".").append(lefton[i]).append(" = ").append(join[i]).append(".").append(righton[i]);
                 leftjoin = join[i];
             }
         }
 
-        if (where != null) query += " WHERE " + where;
-        if (groupby != null) query += " GROUP BY " + groupby;
-        if (orderby != null) query += " ORDER BY " + orderby;
-        Cursor c = db.rawQuery(query, null);
+        if (where != null) query.append(" WHERE ").append(where);
+        if (groupby != null) query.append(" GROUP BY ").append(groupby);
+        if (orderby != null) query.append(" ORDER BY ").append(orderby);
+        Cursor c = db.rawQuery(query.toString(), null);
         c.moveToFirst();
         db.close();
         return c;
     }
 
-    public void addLine(Line l){
+    public void addLine(SQLiteDatabase db, Line l) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Line.COLUMN_LINE, l.getLine());
 
-        SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.Line.TABLE_NAME, null, values);
-        db.close();
+        if (db == null) {
+            db = getWritableDatabase();
+            db.insert(MyContract.Line.TABLE_NAME, null, values);
+            db.close();
+        } else db.insert(MyContract.Line.TABLE_NAME, null, values);
     }
 
-    public void addStop(Stop s){
+    public void addStop(SQLiteDatabase db, Stop s) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Stop.COLUMN_NAME, s.getName());
 
-        SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.Stop.TABLE_NAME, null, values);
-        db.close();
+        if (db == null) {
+            db = getWritableDatabase();
+            db.insert(MyContract.Stop.TABLE_NAME, null, values);
+            db.close();
+        } else db.insert(MyContract.Stop.TABLE_NAME, null, values);
     }
 
-    public void addLineStop(LineStop ls){
+    public void addLineStop(SQLiteDatabase db, LineStop ls) {
         ContentValues values = new ContentValues();
         values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
         values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
         values.put(MyContract.LineStop.COLUMN_NUMBER, ls.getNumber());
 
-        SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.LineStop.TABLE_NAME, null, values);
-        db.close();
+        if (db == null) {
+            db = getWritableDatabase();
+            db.insert(MyContract.LineStop.TABLE_NAME, null, values);
+            db.close();
+        } else db.insert(MyContract.LineStop.TABLE_NAME, null, values);
     }
 
-    public void addTime(Time t){
+    public void addTime(SQLiteDatabase db, Time t) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
         values.put(MyContract.Time.COLUMN_TIME, t.getTime());
         values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
         values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
 
-        SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.Time.TABLE_NAME, null, values);
+        if (db == null) db = getWritableDatabase();
+        db.insert(MyContract.Time.TABLE_NAME, null, values);
         db.close();
     }
 
@@ -148,7 +155,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(MyContract.FavouriteLine.COLUMN_ID_LINE, fl.getIDLine());
 
         SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.FavouriteLine.TABLE_NAME, null, values);
+        db.insert(MyContract.FavouriteLine.TABLE_NAME, null, values);
         db.close();
     }
 
@@ -157,7 +164,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(MyContract.FavouriteStop.COLUMN_ID_STOP, fs.getIDStop());
 
         SQLiteDatabase db = getWritableDatabase();
-        long newRow = db.insert(MyContract.FavouriteStop.TABLE_NAME, null, values);
+        db.insert(MyContract.FavouriteStop.TABLE_NAME, null, values);
         db.close();
     }
 
@@ -205,7 +212,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateFavouriteLine(FavouriteLine fl) {
         ContentValues values = new ContentValues();
         values.put(MyContract.FavouriteLine.COLUMN_ID_LINE, fl.getIDLine());
-        ;
 
         SQLiteDatabase db = getWritableDatabase();
         db.update(MyContract.FavouriteLine.TABLE_NAME, values, MyContract.FavouriteLine.COLUMN_ID + " = ?", new String[]{String.valueOf(fl.getID())});
@@ -215,7 +221,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void updateFavouriteStop(FavouriteStop fs) {
         ContentValues values = new ContentValues();
         values.put(MyContract.FavouriteStop.COLUMN_ID_STOP, fs.getIDStop());
-        ;
 
         SQLiteDatabase db = getWritableDatabase();
         db.update(MyContract.FavouriteStop.TABLE_NAME, values, MyContract.FavouriteStop.COLUMN_ID + " = ?", new String[]{String.valueOf(fs.getID())});
@@ -258,10 +263,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void MHDNitra() {
+    private void deleteAll(SQLiteDatabase db) {
+        db.rawQuery("DELETE FROM " + MyContract.Line.TABLE_NAME, null);
+        db.rawQuery("DELETE FROM " + MyContract.Stop.TABLE_NAME, null);
+        db.rawQuery("DELETE FROM " + MyContract.LineStop.TABLE_NAME, null);
+        db.rawQuery("DELETE FROM " + MyContract.Time.TABLE_NAME, null);
+        db.rawQuery("DELETE FROM " + MyContract.FavouriteLine.TABLE_NAME, null);
+        db.rawQuery("DELETE FROM " + MyContract.FavouriteStop.TABLE_NAME, null);
+    }
+
+    private void MHDNitra(SQLiteDatabase db) {
         String[] lines = new String[]{"1", "2", "4", "6", "7", "8", "9", "10", "11", "12", "13", "14",
                 "15", "16", "17", "18", "19", "21", "22", "24", "25", "26", "27", "30", "32", "33", "C35"};
-        for (int i = 0; i < lines.length; i++) addLine(new Line(i + 1, lines[i]));
+        for (int i = 0; i < lines.length; i++) addLine(db, new Line(i + 1, lines[i]));
 
         String[] stops = new String[]{
                 // Drážovce
@@ -476,7 +490,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "METRO"
         };
 
-        for (int i = 0; i < stops.length; i++) addStop(new Stop(i + 1, stops[i]));
+        for (int i = 0; i < stops.length; i++) addStop(db, new Stop(i + 1, stops[i]));
 
         long linestops[][] = new long[][]{
                 new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164}, // 1
@@ -488,12 +502,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int linestopid = 0;
         for (int i = 0; i < linestops.length; i++)
-            linestopid = addLineStops(linestops[i], i + 1, linestopid);
+            linestopid = addLineStops(db, linestops[i], i + 1, linestopid);
     }
 
-    private int addLineStops(long[] stops, long idline, int linestopid) {
+    private int addLineStops(SQLiteDatabase db, long[] stops, long idline, int linestopid) {
         for (int i = 0; i < stops.length; i++)
-            addLineStop(new LineStop(i + 1 + linestopid, idline, stops[i], i + 1));
+            addLineStop(db, new LineStop(i + 1 + linestopid, idline, stops[i], i + 1));
         return linestopid + stops.length;
     }
 }

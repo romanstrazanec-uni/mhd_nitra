@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        deleteDatabase("mhd");
-        dbh.MHDNitra();
 
         lv = findViewById(R.id.line_list_view);
         TextView tv = findViewById(R.id.main_text_view);

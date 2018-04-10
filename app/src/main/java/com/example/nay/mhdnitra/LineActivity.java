@@ -1,11 +1,14 @@
 package com.example.nay.mhdnitra;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ public class LineActivity extends AppCompatActivity {
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
         lineId = getIntent().getLongExtra("line_id", 0);
         connectAdapter(order);
+        addOnItemClickListener();
     }
 
     @Override
@@ -59,4 +63,16 @@ public class LineActivity extends AppCompatActivity {
         tv.setText("Trasa linky " + c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE)));
     }
 
+    private void addOnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                Intent i = new Intent(LineActivity.this, TimesActivity.class);
+                i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.LineStop.COLUMN_ID)));
+                startActivity(i);
+            }
+        });
+    }
 }

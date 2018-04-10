@@ -51,7 +51,7 @@ public class StopsActivity extends AppCompatActivity {
 
     public void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout,
-                dbh.getCursor(MyContract.Stop.TABLE_NAME, null, null, null, null, null),
+                dbh.getCursor(null, MyContract.Stop.TABLE_NAME, null, null, null, null, null, null),
                 new String[]{MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);

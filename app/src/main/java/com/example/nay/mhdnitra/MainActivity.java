@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
-                dbh.getCursor(MyContract.Line.TABLE_NAME, null, null, null, null, null),
+                dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null, null, null, null),
                 new String[]{MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);
@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID));
 
-                c = dbh.getCursor(MyContract.FavouriteLine.TABLE_NAME, null, null, null,
-                        MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null);
+                c = dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, null, null, null,
+                        MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null, null);
                 if (c.moveToFirst()) {
                     builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {

@@ -76,9 +76,15 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public Cursor getCursor(String from, String[] join, String[] lefton, String[] righton, String where, String orderby) {
+    public Cursor getCursor(String[] select, String from, String[] join, String[] lefton, String[] righton, String where, String groupby, String orderby) {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + from;
+        String selection = "";
+        if (select != null) {
+            for (String s : select) selection += s + ",";
+        } else selection = "*,";
+
+        String query = "SELECT " + selection.substring(0, selection.length() - 1) + " FROM " + from;
+
         if (join != null && lefton != null && righton != null && join.length == lefton.length && lefton.length == righton.length) {
             String leftjoin = from;
             for (int i = 0; i < join.length; i++) {
@@ -88,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         if (where != null) query += " WHERE " + where;
+        if (groupby != null) query += " GROUP BY " + groupby;
         if (orderby != null) query += " ORDER BY " + orderby;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
@@ -474,7 +481,7 @@ public class DBHelper extends SQLiteOpenHelper {
         long linestops[][] = new long[][]{
                 new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164}, // 1
                 new long[]{50, 48, 34, 35, 40, 51, 38, 44, 34, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 2
-                new long[]{50, 48, 34, 35, 40, 51, 38, 44, 33, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 175, 168, 5, 6, 7, 5, 9, 10, 3, 4, 1, 2}, // 4
+                new long[]{50, 48, 34, 35, 40, 51, 38, 44, 33, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 4
                 new long[]{14, 12, 13, 15, 183, 190, 169, 136, 125, 134, 122, 128, 131, 56, 52, 46, 51, 40, 35, 34}, // 6
                 new long[]{58, 53, 50, 48, 60, 49, 52, 56, 131, 142, 135, 124, 123, 125, 134, 122, 137, 120, 139, 129} // 7
         };

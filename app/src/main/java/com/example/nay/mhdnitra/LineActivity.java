@@ -53,13 +53,14 @@ public class LineActivity extends AppCompatActivity {
 
     public void connectAdapter(String order) {
         sca = new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
-                dbh.getCursor(MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
+                dbh.getCursor(null, MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
                         new String[]{MyContract.LineStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
-                        MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId, MyContract.LineStop.COLUMN_NUMBER + order),
+                        MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId, null, MyContract.LineStop.COLUMN_NUMBER + order),
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.line_stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
-        Cursor c = dbh.getCursor(MyContract.Line.TABLE_NAME, null, null, null, MyContract.Line.COLUMN_ID + "=" + lineId, null);
+        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
+                MyContract.Line.COLUMN_ID + "=" + lineId, null, null);
         tv.setText("Trasa linky " + c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE)));
     }
 

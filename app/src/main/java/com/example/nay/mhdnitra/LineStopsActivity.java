@@ -41,9 +41,9 @@ public class LineStopsActivity extends AppCompatActivity {
 
     private void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
-                dbh.getCursor(MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
+                dbh.getCursor(null, MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
                         new String[]{MyContract.LineStop.COLUMN_ID_LINE}, new String[]{MyContract.Line.COLUMN_ID},
-                        MyContract.LineStop.COLUMN_ID_STOP + "=" + stopId, MyContract.Line.COLUMN_ID),
+                        MyContract.LineStop.COLUMN_ID_STOP + "=" + stopId, MyContract.Line.TABLE_NAME + "." + MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_ID),
                 new String[]{MyContract.LineStop.COLUMN_ID_LINE, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);
@@ -72,8 +72,8 @@ public class LineStopsActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.LineStop.COLUMN_ID_LINE));
 
-                c = dbh.getCursor(MyContract.FavouriteLine.TABLE_NAME, null, null, null,
-                        MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null);
+                c = dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, null, null, null,
+                        MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null, null);
                 if (c.moveToFirst()) {
                     builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
                     builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {

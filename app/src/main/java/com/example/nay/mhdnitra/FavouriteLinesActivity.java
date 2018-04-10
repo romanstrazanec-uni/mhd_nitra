@@ -36,9 +36,9 @@ public class FavouriteLinesActivity extends AppCompatActivity {
 
     private void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
-                dbh.getCursor(MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
+                dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
                         new String[]{MyContract.FavouriteLine.COLUMN_ID_LINE}, new String[]{MyContract.Line.COLUMN_ID},
-                        null, MyContract.Line.COLUMN_LINE),
+                        null, null, MyContract.Line.COLUMN_LINE),
                 new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
                 new int[]{R.id.favourite_line_id, R.id.line_id, R.id.line}, 0);
         lv.setAdapter(sca);

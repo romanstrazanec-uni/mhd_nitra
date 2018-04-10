@@ -1,9 +1,11 @@
 package com.example.nay.mhdnitra;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import com.example.nay.mhdnitra.Entities.FavouriteStop;
 
 public class StopsActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
@@ -31,6 +35,7 @@ public class StopsActivity extends AppCompatActivity {
 
         connectAdapter();
         addOnItemClickListener();
+        addOnItemLongClickListener();
     }
 
     @Override
@@ -68,6 +73,50 @@ public class StopsActivity extends AppCompatActivity {
                 i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID)));
                 i.putExtra("title", c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME)));
                 startActivity(i);
+            }
+        });
+    }
+
+    private void addOnItemLongClickListener() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+
+                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                final long ID = c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID));
+
+                c = dbh.getCursor(null, MyContract.FavouriteStop.TABLE_NAME, null, null, null,
+                        MyContract.FavouriteStop.COLUMN_ID_STOP + " = " + ID, null, null);
+                if (c.moveToFirst()) {
+                    builder.setMessage("Odobrať z obľúbených?").setTitle("Mazanie");
+                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dbh.deleteFavouriteStop(ID);
+                            dialogInterface.dismiss();
+                        }
+                    });
+                } else {
+                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridanie");
+                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dbh.addFavouriteStop(new FavouriteStop(1, ID));
+                            dialogInterface.dismiss();
+                        }
+                    });
+                }
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.show();
+                return false;
             }
         });
     }

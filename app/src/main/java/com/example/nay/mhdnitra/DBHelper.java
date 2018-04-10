@@ -103,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public void addLine(SQLiteDatabase db, Line l) {
+    private void addLine(SQLiteDatabase db, Line l) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Line.COLUMN_LINE, l.getLine());
 
@@ -114,7 +114,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } else db.insert(MyContract.Line.TABLE_NAME, null, values);
     }
 
-    public void addStop(SQLiteDatabase db, Stop s) {
+    private void addStop(SQLiteDatabase db, Stop s) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Stop.COLUMN_NAME, s.getName());
 
@@ -125,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } else db.insert(MyContract.Stop.TABLE_NAME, null, values);
     }
 
-    public void addLineStop(SQLiteDatabase db, LineStop ls) {
+    private void addLineStop(SQLiteDatabase db, LineStop ls) {
         ContentValues values = new ContentValues();
         values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
         values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
@@ -145,9 +145,12 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(MyContract.Time.COLUMN_WEEKEND, t.getWeekend());
         values.put(MyContract.Time.COLUMN_HOLIDAYS, t.getHolidays());
 
-        if (db == null) db = getWritableDatabase();
-        db.insert(MyContract.Time.TABLE_NAME, null, values);
-        db.close();
+        if (db == null) {
+            db = getWritableDatabase();
+            db.insert(MyContract.Time.TABLE_NAME, null, values);
+            db.close();
+        } else db.insert(MyContract.Time.TABLE_NAME, null, values);
+
     }
 
     public void addFavouriteLine(FavouriteLine fl) {

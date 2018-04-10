@@ -1,5 +1,6 @@
 package com.example.nay.mhdnitra;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -63,6 +64,10 @@ public class StopsActivity extends AppCompatActivity {
                 ListView lv = findViewById(R.id.stops_list_view);
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
+                Intent i = new Intent(StopsActivity.this, FavouriteLinesActivity.class);
+                i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID)));
+                i.putExtra("title", c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME)));
+                startActivity(i);
             }
         });
     }

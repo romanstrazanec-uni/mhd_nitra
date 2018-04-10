@@ -27,7 +27,7 @@ public class TimesActivity extends AppCompatActivity {
     public void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.times_list_layout, dbh.getCursor(null, MyContract.Time.TABLE_NAME,
                 null, null, null, MyContract.Time.COLUMN_ID_LINESTOP + " = " + lineStopId,
-                null, null),
+                null, MyContract.Time.COLUMN_HOUR + ", " + MyContract.Time.COLUMN_MINUTE),
                 new String[]{MyContract.Time.COLUMN_ID, MyContract.Time.COLUMN_HOUR, MyContract.Time.COLUMN_MINUTE},
                 new int[]{R.id.times_id, R.id.hour, R.id.minutes}, 0);
         lv.setAdapter(sca);

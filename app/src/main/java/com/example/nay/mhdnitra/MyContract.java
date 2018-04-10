@@ -20,6 +20,7 @@ public class MyContract {
         public static final String COLUMN_ID_LINE = "id_line";
         public static final String COLUMN_ID_STOP = "id_stop";
         public static final String COLUMN_NUMBER = "number";
+        public static final String COLUMN_DIRECTION = "direction";
     }
 
     public class Time {

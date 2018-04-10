@@ -19,7 +19,7 @@ public class LineActivity extends AppCompatActivity {
     ListView lv;
     TextView tv;
     long lineId;
-    String order = "";
+    int direction = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,12 @@ public class LineActivity extends AppCompatActivity {
         lv = findViewById(R.id.line_stop_list_view);
         tv = findViewById(R.id.line_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
+        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
+                MyContract.Line.COLUMN_ID + "=" + lineId, null, null);
+        tv.setText(String.format("Trasa linky %s", c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE))));
+
         lineId = getIntent().getLongExtra("line_id", 0);
-        connectAdapter(order);
+        connectAdapter(direction);
         addOnItemClickListener();
     }
 
@@ -42,26 +46,24 @@ public class LineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.line_stop_menu_order:
-                if (order.equals("")) order = " DESC";
-                else order = "";
-                connectAdapter(order);
+                if (direction == 0) direction = 1;
+                else direction = 0;
+                connectAdapter(direction);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void connectAdapter(String order) {
+    public void connectAdapter(int direction) {
         sca = new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
                 dbh.getCursor(null, MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
                         new String[]{MyContract.LineStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
-                        MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId, null, MyContract.LineStop.COLUMN_NUMBER + order),
+                        MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId + " AND " + MyContract.LineStop.COLUMN_DIRECTION + " = " + direction,
+                        null, null),
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.line_stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
-        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
-                MyContract.Line.COLUMN_ID + "=" + lineId, null, null);
-        tv.setText("Trasa linky " + c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE)));
     }
 
     private void addOnItemClickListener() {

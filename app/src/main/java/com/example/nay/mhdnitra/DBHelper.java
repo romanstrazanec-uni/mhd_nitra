@@ -130,6 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
         values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
         values.put(MyContract.LineStop.COLUMN_NUMBER, ls.getNumber());
+        values.put(MyContract.LineStop.COLUMN_DIRECTION, ls.getDirection());
 
         if (db == null) {
             db = getWritableDatabase();
@@ -194,6 +195,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
         values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
         values.put(MyContract.LineStop.COLUMN_NUMBER, ls.getNumber());
+        values.put(MyContract.LineStop.COLUMN_DIRECTION, ls.getDirection());
 
         SQLiteDatabase db = getWritableDatabase();
         db.update(MyContract.LineStop.TABLE_NAME, values, MyContract.LineStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ls.getID())});
@@ -510,7 +512,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private int addLineStops(SQLiteDatabase db, long[] stops, long idline, int linestopid) {
         for (int i = 0; i < stops.length; i++)
-            addLineStop(db, new LineStop(i + 1 + linestopid, idline, stops[i], i + 1));
+            addLineStop(db, new LineStop(i + 1 + linestopid, idline, stops[i], i + 1, 0));
         return linestopid + stops.length;
     }
 }

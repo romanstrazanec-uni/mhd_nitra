@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,6 +33,31 @@ public class TimesActivity extends AppCompatActivity {
         addOnItemLongClickListener();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.time_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.time_menu_add:
+                startActivity(new Intent(this, StopsActivity.class));
+                return true;
+            case R.id.time_menu_all:
+                startActivity(new Intent(this, FavouriteLinesActivity.class));
+                return true;
+            case R.id.time_menu_weekend:
+                startActivity(new Intent(this, FavouriteLinesActivity.class));
+                return true;
+            case R.id.time_menu_holidays:
+                startActivity(new Intent(this, FavouriteLinesActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void connectAdapter() {
         sca = new SimpleCursorAdapter(this, R.layout.times_list_layout, dbh.getCursor(null, MyContract.Time.TABLE_NAME,
                 null, null, null, MyContract.Time.COLUMN_ID_LINESTOP + " = " + lineStopId,
@@ -39,7 +66,6 @@ public class TimesActivity extends AppCompatActivity {
                 new int[]{R.id.times_id, R.id.hour, R.id.minutes}, 0);
         lv.setAdapter(sca);
     }
-
 
     private void addOnItemClickListener() {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -503,20 +503,27 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long linestops[][] = new long[][]{
                 new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164}, // 1
+                new long[]{164, 158, 149, 181, 156, 174, 186, 157, 187, 147, 185, 169, 136, 125, 134, 122, 137, 146},
                 new long[]{50, 48, 34, 35, 40, 51, 38, 44, 34, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 2
+                new long[]{2, 4, 3, 9, 8, 7, 6, 5, 168, 175, 176, 184, 187, 147, 185, 169, 20, 133, 188, 143, 122, 137, 138, 43, 88, 45, 34, 44, 38, 51, 40, 35, 34, 48, 50},
                 new long[]{50, 48, 34, 35, 40, 51, 38, 44, 33, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 4
+                new long[]{2, 4, 3, 9, 8, 7, 6, 5, 168, 175, 169, 20, 133, 188, 143, 122, 137, 138, 43, 88, 45, 33, 44, 38, 51, 40, 35, 34, 48, 50},
                 new long[]{14, 12, 13, 15, 183, 190, 169, 136, 125, 134, 122, 128, 131, 56, 52, 46, 51, 40, 35, 34}, // 6
-                new long[]{58, 53, 50, 48, 60, 49, 52, 56, 131, 142, 135, 124, 123, 125, 134, 122, 137, 120, 139, 129} // 7
+                new long[]{34, 35, 40, 51, 46, 52, 56, 131, 143, 122, 125, 136, 139, 190, 183, 15, 13, 12, 14},
+                new long[]{58, 53, 50, 48, 60, 49, 52, 56, 131, 142, 135, 124, 123, 125, 134, 122, 137, 120, 139, 129}, // 7
+                new long[]{129, 139, 120, 127, 138, 137, 122, 125, 123, 124, 135, 128, 131, 56, 52, 49, 48, 50, 58}
         };
 
         int linestopid = 0;
-        for (int i = 0; i < linestops.length; i++)
-            linestopid = addLineStops(db, linestops[i], i + 1, linestopid);
+        for (int i = 0; i < linestops.length; i = i + 2) {
+            linestopid = addLineStops(db, linestops[i], i / 2 + 1, linestopid, 0);
+            linestopid = addLineStops(db, linestops[i + 1], i / 2 + 1, linestopid, 1);
+        }
     }
 
-    private int addLineStops(SQLiteDatabase db, long[] stops, long idline, int linestopid) {
+    private int addLineStops(SQLiteDatabase db, long[] stops, long idline, int linestopid, int direction) {
         for (int i = 0; i < stops.length; i++)
-            addLineStop(db, new LineStop(i + 1 + linestopid, idline, stops[i], i + 1, 0));
+            addLineStop(db, new LineStop(i + 1 + linestopid, idline, stops[i], i + 1, direction));
         return linestopid + stops.length;
     }
 }

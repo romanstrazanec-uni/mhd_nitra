@@ -3,6 +3,7 @@ package com.example.nay.mhdnitra;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class TimesActivity extends AppCompatActivity {
         lineStopId = i.getLongExtra("line_stop_id", 0);
 
         TextView tv = findViewById(R.id.times_text_view);
+        tv.setBackgroundColor(Color.rgb(190, 190, 220));
         tv.setText("Časy linky " + lineStopId);
 
         lv = findViewById(R.id.times_list_view);

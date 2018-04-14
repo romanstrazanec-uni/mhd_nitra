@@ -3,6 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TimeAddActivity">
+
+
+    <TextView
+        android:id="@+id/time_add_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="Pridať čas"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="Čas"
+        android:inputType="time" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="addTime"
+        android:text="Pridaj" />
 
 </LinearLayout>

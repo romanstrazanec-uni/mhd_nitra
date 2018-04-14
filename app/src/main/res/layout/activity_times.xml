@@ -6,6 +6,13 @@
     android:orientation="vertical"
     tools:context=".TimesActivity">
 
+    <TextView
+        android:id="@+id/times_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
     <ListView
         android:id="@+id/times_list_view"
         android:layout_width="match_parent"

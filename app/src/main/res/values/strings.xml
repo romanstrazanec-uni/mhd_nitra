@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">MHDNitra</string>
 
+    <string name="add_time">Pridať Čas</string>
+    <string name="time">00:00</string>
+    <string name="add">Pridaj</string>
+
+
     <string-array name="weekend">
         <item>Pracovné dni</item>
         <item>Víkend</item>

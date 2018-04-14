@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MHDNitra</string>
+
+    <string-array name="weekend">
+        <item>Pracovné dni</item>
+        <item>Víkend</item>
+        <item>Každý deň</item>
+    </string-array>
+
+    <string-array name="holidays">
+        <item>Pracovné dni</item>
+        <item>Prázdniny</item>
+        <item>Každý deň</item>
+    </string-array>
 </resources>

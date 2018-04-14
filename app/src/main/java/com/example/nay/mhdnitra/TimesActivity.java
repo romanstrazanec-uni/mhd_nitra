@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.example.nay.mhdnitra.Entities.Time;
+
 public class TimesActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
@@ -40,6 +42,22 @@ public class TimesActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    dbh.addTime(null, new Time(0, lineStopId,
+                            data.getIntExtra("hour", 0),
+                            data.getIntExtra("minute", 0),
+                            data.getIntExtra("weekend", 0),
+                            data.getIntExtra("holidays", 0)));
+                    connectAdapter("all");
+                }
+                break;
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.time_menu, menu);
         return true;
@@ -51,7 +69,7 @@ public class TimesActivity extends AppCompatActivity {
             case R.id.time_menu_add:
                 Intent i = new Intent(this, TimeAddActivity.class);
                 i.putExtra("line_stop_id", lineStopId);
-                startActivity(i);
+                startActivityForResult(i, 1);
                 return true;
             case R.id.time_menu_all:
                 item.setVisible(false);

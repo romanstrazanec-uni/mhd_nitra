@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class TimeAddActivity extends AppCompatActivity {
     Spinner s1, s2;
@@ -22,19 +23,36 @@ public class TimeAddActivity extends AppCompatActivity {
 
 
     public void addTime(View view) {
-        Intent i = new Intent();
         EditText et = findViewById(R.id.editText);
-        i.putExtra("hour", Integer.parseInt(et.getText().toString().split(":")[0]));
-        i.putExtra("minute", Integer.parseInt(et.getText().toString().split(":")[1]));
-        i.putExtra("weekend", s1.getSelectedItemPosition());
-        i.putExtra("holidays", s2.getSelectedItemPosition());
-        setResult(RESULT_OK, i);
-        finish();
+        String time = et.getText().toString();
+
+        if (validTime(time)) {
+            Intent i = new Intent();
+            i.putExtra("hour", Integer.parseInt(et.getText().toString().split(":")[0]));
+            i.putExtra("minute", Integer.parseInt(et.getText().toString().split(":")[1]));
+            i.putExtra("weekend", s1.getSelectedItemPosition());
+            i.putExtra("holidays", s2.getSelectedItemPosition());
+            setResult(RESULT_OK, i);
+            finish();
+        } else {
+            Toast.makeText(this, "Nesprávny formát času.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void connectSpinnerAdapter(Spinner s, int array) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         s.setAdapter(adapter);
+    }
+
+    private boolean validTime(String time) {
+        try {
+            int hour = Integer.parseInt(time.split(":")[0]);
+            int minute = Integer.parseInt(time.split(":")[1]);
+            if ((hour < 0 || hour > 23) || (minute < 0 || minute > 59)) return false;
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
     }
 }

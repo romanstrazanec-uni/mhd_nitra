@@ -59,7 +59,8 @@ public class LineActivity extends AppCompatActivity {
 
     public void connectAdapter(int direction) {
         sca = new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
-                dbh.getCursor(null, MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
+                dbh.getCursor(new String[]{MyContract.LineStop.TABLE_NAME + "." + MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
+                        MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
                         new String[]{MyContract.LineStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
                         MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId + " AND " + MyContract.LineStop.COLUMN_DIRECTION + " = " + direction,
                         null, null),

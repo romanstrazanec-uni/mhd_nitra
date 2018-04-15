@@ -25,14 +25,16 @@ public class LineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line);
+        lineId = getIntent().getLongExtra("line_id", 0);
+
         lv = findViewById(R.id.line_stop_list_view);
         tv = findViewById(R.id.line_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
         Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
-                MyContract.Line.COLUMN_ID + "=" + lineId, null, null);
+                MyContract.Line.COLUMN_ID + " = " + lineId, null, null);
+        c.moveToFirst();
         tv.setText(String.format("Trasa linky %s", c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE))));
 
-        lineId = getIntent().getLongExtra("line_id", 0);
         connectAdapter(direction);
         addOnItemClickListener();
     }
@@ -73,6 +75,7 @@ public class LineActivity extends AppCompatActivity {
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
                 Intent i = new Intent(LineActivity.this, TimesActivity.class);
+                i.putExtra("line_id", lineId);
                 i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.LineStop.COLUMN_ID)));
                 startActivity(i);
             }

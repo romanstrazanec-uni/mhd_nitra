@@ -24,8 +24,8 @@ public class TimeAddActivity extends AppCompatActivity {
     public void addTime(View view) {
         Intent i = new Intent();
         EditText et = findViewById(R.id.editText);
-        i.putExtra("hour", et.getText().toString().split(":")[0]);
-        i.putExtra("minute", et.getText().toString().split(":")[1]);
+        i.putExtra("hour", Integer.parseInt(et.getText().toString().split(":")[0]));
+        i.putExtra("minute", Integer.parseInt(et.getText().toString().split(":")[1]));
         i.putExtra("weekend", s1.getSelectedItemPosition());
         i.putExtra("holidays", s2.getSelectedItemPosition());
         setResult(RESULT_OK, i);

@@ -22,6 +22,7 @@ public class TimesActivity extends AppCompatActivity {
     DBHelper dbh = new DBHelper(this);
     ListView lv;
     long lineStopId;
+    String filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,14 @@ public class TimesActivity extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.times_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
-        tv.setText("Časy linky " + lineStopId);
+        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
+                MyContract.Line.COLUMN_ID + " = " + i.getLongExtra("line_id", 0), null, null);
+        c.moveToFirst();
+        tv.setText(String.format("Časy linky %s", c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE))));
 
         lv = findViewById(R.id.times_list_view);
-        connectAdapter("all");
+        filter = "all";
+        connectAdapter(filter);
         addOnItemClickListener();
         addOnItemLongClickListener();
     }
@@ -46,12 +51,15 @@ public class TimesActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    dbh.addTime(null, new Time(0, lineStopId,
-                            data.getIntExtra("hour", 0),
-                            data.getIntExtra("minute", 0),
-                            data.getIntExtra("weekend", 0),
-                            data.getIntExtra("holidays", 0)));
-                    connectAdapter("all");
+                    Bundle b = data.getExtras();
+                    if (b != null) {
+                        dbh.addTime(null, new Time(0, lineStopId,
+                                b.getInt("hour", 0),
+                                b.getInt("minute", 0),
+                                b.getInt("weekend", 0),
+                                b.getInt("holidays", 0)));
+                        connectAdapter(filter);
+                    }
                 }
                 break;
         }
@@ -64,7 +72,6 @@ public class TimesActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        MenuItem tm;
         switch (item.getItemId()) {
             case R.id.time_menu_add:
                 Intent i = new Intent(this, TimeAddActivity.class);
@@ -72,28 +79,16 @@ public class TimesActivity extends AppCompatActivity {
                 startActivityForResult(i, 1);
                 return true;
             case R.id.time_menu_all:
-                item.setVisible(false);
-                tm = findViewById(R.id.time_menu_weekend);
-                tm.setVisible(true);
-                tm = findViewById(R.id.time_menu_holidays);
-                tm.setVisible(true);
-                connectAdapter("all");
+                filter = "all";
+                connectAdapter(filter);
                 return true;
             case R.id.time_menu_weekend:
-                item.setVisible(false);
-                tm = findViewById(R.id.time_menu_all);
-                tm.setVisible(true);
-                tm = findViewById(R.id.time_menu_holidays);
-                tm.setVisible(true);
-                connectAdapter("weekend");
+                filter = "weekend";
+                connectAdapter(filter);
                 return true;
             case R.id.time_menu_holidays:
-                item.setVisible(false);
-                tm = findViewById(R.id.time_menu_all);
-                tm.setVisible(true);
-                tm = findViewById(R.id.time_menu_weekend);
-                tm.setVisible(true);
-                connectAdapter("holidays");
+                filter = "holidays";
+                connectAdapter(filter);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -125,7 +120,7 @@ public class TimesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
-                Intent i = new Intent(TimesActivity.this, LineActivity.class);
+                Intent i = new Intent(TimesActivity.this, TimeAddActivity.class);
                 i.putExtra("time_id", c.getLong(c.getColumnIndex(MyContract.Time.COLUMN_ID)));
                 startActivity(i);
             }
@@ -147,6 +142,7 @@ public class TimesActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dbh.deleteTime(ID);
+                        connectAdapter(filter);
                         dialogInterface.dismiss();
                     }
                 });

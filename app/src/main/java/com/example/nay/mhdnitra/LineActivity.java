@@ -84,8 +84,8 @@ public class LineActivity extends AppCompatActivity {
 
     private String getLastStopName() {
         Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
-        c.moveToLast();
-        return c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME));
+        if (c.moveToLast()) return c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME));
+        else return null;
     }
 
     private String getLineName() {

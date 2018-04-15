@@ -39,7 +39,6 @@ public class TimesActivity extends AppCompatActivity {
         lv = findViewById(R.id.times_list_view);
         filter = "all";
         connectAdapter(filter);
-        addOnItemClickListener();
         addOnItemLongClickListener();
     }
 
@@ -109,19 +108,6 @@ public class TimesActivity extends AppCompatActivity {
                 new String[]{MyContract.Time.COLUMN_ID, MyContract.Time.COLUMN_HOUR, MyContract.Time.COLUMN_MINUTE},
                 new int[]{R.id.times_id, R.id.hour, R.id.minutes}, 0);
         lv.setAdapter(sca);
-    }
-
-    private void addOnItemClickListener() {
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
-                c.moveToPosition(position);
-                Intent i = new Intent(TimesActivity.this, TimeAddActivity.class);
-                i.putExtra("time_id", c.getLong(c.getColumnIndex(MyContract.Time.COLUMN_ID)));
-                startActivity(i);
-            }
-        });
     }
 
     private void addOnItemLongClickListener() {

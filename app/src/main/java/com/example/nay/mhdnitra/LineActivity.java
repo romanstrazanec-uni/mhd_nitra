@@ -30,11 +30,6 @@ public class LineActivity extends AppCompatActivity {
         lv = findViewById(R.id.line_stop_list_view);
         tv = findViewById(R.id.line_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
-        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
-                MyContract.Line.COLUMN_ID + " = " + lineId, null, null);
-        c.moveToFirst();
-        tv.setText(String.format("Trasa linky %s", c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE))));
-
         connectAdapter(direction);
         addOnItemClickListener();
     }
@@ -67,6 +62,15 @@ public class LineActivity extends AppCompatActivity {
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.line_stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
+
+        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
+                MyContract.Line.COLUMN_ID + " = " + lineId, null, null);
+        c.moveToFirst();
+        String line = c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE));
+
+        c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
+        c.moveToLast();
+        tv.setText(String.format("Trasa linky %s, smer %s", line, c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME))));
     }
 
     private void addOnItemClickListener() {

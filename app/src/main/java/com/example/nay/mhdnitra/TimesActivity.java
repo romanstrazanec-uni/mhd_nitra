@@ -34,10 +34,7 @@ public class TimesActivity extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.times_text_view);
         tv.setBackgroundColor(Color.rgb(190, 190, 220));
-        Cursor c = dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null,
-                MyContract.Line.COLUMN_ID + " = " + i.getLongExtra("line_id", 0), null, null);
-        c.moveToFirst();
-        tv.setText(String.format("Časy linky %s", c.getString(c.getColumnIndex(MyContract.Line.COLUMN_LINE))));
+        tv.setText(String.format("%s, %s --> %s", i.getStringExtra("line"), i.getStringExtra("stop"), i.getStringExtra("direction")));
 
         lv = findViewById(R.id.times_list_view);
         filter = "all";

@@ -73,7 +73,9 @@ public class LineActivity extends AppCompatActivity {
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
                 Intent i = new Intent(LineActivity.this, TimesActivity.class);
-                i.putExtra("line_id", lineId);
+                i.putExtra("line", getLineName());
+                i.putExtra("stop", c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME)));
+                i.putExtra("direction", getLastStopName());
                 i.putExtra("line_stop_id", c.getLong(c.getColumnIndex(MyContract.LineStop.COLUMN_ID)));
                 startActivity(i);
             }

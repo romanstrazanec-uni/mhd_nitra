@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/main_text_view"
         android:layout_width="60dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center" />
 
     <ListView
         android:id="@+id/line_list_view"

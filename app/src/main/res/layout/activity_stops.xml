@@ -6,6 +6,12 @@
     android:orientation="vertical"
     tools:context=".StopsActivity">
 
+    <SearchView
+        android:id="@+id/stops_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:queryHint="@string/search" />
+
     <TextView
         android:id="@+id/stops_text_view"
         android:layout_width="match_parent"

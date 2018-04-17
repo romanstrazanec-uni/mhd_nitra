@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class StopsActivity extends AppCompatActivity {
     SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
+    SearchView sv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +30,16 @@ public class StopsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stops);
 
         lv = findViewById(R.id.stops_list_view);
+        sv = findViewById(R.id.stops_search_view);
         TextView tv = findViewById(R.id.stops_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
         tv.setText("Zastávka");
 
-        connectAdapter();
+        connectAdapter(null);
         addOnItemClickListener();
         addOnItemLongClickListener();
+        addOnQueryTextListener();
     }
 
     @Override
@@ -57,9 +61,9 @@ public class StopsActivity extends AppCompatActivity {
         }
     }
 
-    public void connectAdapter() {
+    public void connectAdapter(String s) {
         sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout,
-                dbh.getCursor(null, MyContract.Stop.TABLE_NAME, null, null, null, null, null, null),
+                dbh.getCursor(null, MyContract.Stop.TABLE_NAME, null, null, null, s, null, null),
                 new String[]{MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                 new int[]{R.id.stop_id, R.id.stop_name}, 0);
         lv.setAdapter(sca);
@@ -120,6 +124,23 @@ public class StopsActivity extends AppCompatActivity {
 
                 builder.show();
                 return false;
+            }
+        });
+    }
+
+    private void addOnQueryTextListener() {
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (s.equals("")) s = null;
+                else s = MyContract.Stop.COLUMN_NAME + " LIKE '%" + s + "%'";
+                connectAdapter(s);
+                return true;
             }
         });
     }

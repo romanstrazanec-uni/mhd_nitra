@@ -37,7 +37,7 @@ public class TimesActivity extends AppCompatActivity {
         tv.setText(String.format("%s, %s --> %s", i.getStringExtra("line"), i.getStringExtra("stop"), i.getStringExtra("direction")));
 
         lv = findViewById(R.id.times_list_view);
-        filter = "all";
+        filter = "workdays";
         connectAdapter(filter);
         addOnItemLongClickListener();
     }
@@ -75,7 +75,7 @@ public class TimesActivity extends AppCompatActivity {
                 startActivityForResult(i, 1);
                 return true;
             case R.id.time_menu_all:
-                filter = "all";
+                filter = "workdays";
                 connectAdapter(filter);
                 return true;
             case R.id.time_menu_weekend:
@@ -94,6 +94,9 @@ public class TimesActivity extends AppCompatActivity {
     public void connectAdapter(String filter) {
         String where = MyContract.Time.COLUMN_ID_LINESTOP + " = " + lineStopId;
         switch (filter) {
+            case "workdays":
+                where += " AND NOT " + MyContract.Time.COLUMN_WEEKEND + " = 1 AND NOT " + MyContract.Time.COLUMN_HOLIDAYS + " = 1";
+                break;
             case "weekend":
                 where += " AND NOT " + MyContract.Time.COLUMN_WEEKEND + " = 0";
                 break;

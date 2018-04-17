@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/time_menu_add"
-        android:title="Pridať" />
+        android:title="@string/add" />
 
     <item
         android:id="@+id/time_menu_all"
-        android:title="Všetky" />
+        android:title="@string/workdays" />
 
     <item
         android:id="@+id/time_menu_weekend"
-        android:title="Víkend" />
+        android:title="@string/weekend" />
 
     <item
         android:id="@+id/time_menu_holidays"
-        android:title="Sviatky" />
+        android:title="@string/holidays" />
 </menu>

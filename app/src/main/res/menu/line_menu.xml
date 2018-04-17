@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/line_menu_stops"
-        android:title="Zastávky" />
+        android:title="@string/stops" />
     <item
         android:id="@+id/line_menu_favourites"
-        android:title="Obľúbené" />
+        android:title="@string/favourites" />
 </menu>

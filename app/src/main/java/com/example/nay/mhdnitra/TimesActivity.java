@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.nay.mhdnitra.Entities.Time;
 
 public class TimesActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
     long lineStopId;
@@ -105,12 +104,11 @@ public class TimesActivity extends AppCompatActivity {
                 break;
             default:
         }
-        sca = new SimpleCursorAdapter(this, R.layout.times_list_layout, dbh.getCursor(null, MyContract.Time.TABLE_NAME,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.times_list_layout, dbh.getCursor(null, MyContract.Time.TABLE_NAME,
                 null, null, null, where,
                 null, MyContract.Time.COLUMN_HOUR + ", " + MyContract.Time.COLUMN_MINUTE),
                 new String[]{MyContract.Time.COLUMN_ID, MyContract.Time.COLUMN_HOUR, MyContract.Time.COLUMN_MINUTE},
-                new int[]{R.id.times_id, R.id.hour, R.id.minutes}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.times_id, R.id.hour, R.id.minutes}, 0));
     }
 
     private void addOnItemLongClickListener() {
@@ -123,8 +121,8 @@ public class TimesActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.Time.COLUMN_ID));
 
-                builder.setMessage("Naozaj si prajete odstrániť túto položku?").setTitle("Odstrániť");
-                builder.setPositiveButton("Áno", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.do_you_really_want_to_delete_this_item).setTitle(R.string.delete);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dbh.deleteTime(ID);
@@ -132,7 +130,7 @@ public class TimesActivity extends AppCompatActivity {
                         dialogInterface.dismiss();
                     }
                 });
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -140,7 +138,7 @@ public class TimesActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                return false;
+                return true;
             }
         });
     }

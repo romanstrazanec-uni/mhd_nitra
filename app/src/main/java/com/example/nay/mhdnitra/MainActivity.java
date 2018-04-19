@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.nay.mhdnitra.Entities.FavouriteLine;
 
 public class MainActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.main_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
-        tv.setText("Linka");
+        tv.setText(R.string.line);
 
         connectAdapter();
         addOnItemClickListener();
@@ -59,11 +58,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectAdapter() {
-        sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.line_list_layout,
                 dbh.getCursor(null, MyContract.Line.TABLE_NAME, null, null, null, null, null, null),
                 new String[]{MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
-                new int[]{R.id.line_id, R.id.line}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.line_id, R.id.line}, 0));
     }
 
     private void addOnItemClickListener() {
@@ -92,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 c = dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, null, null, null,
                         MyContract.FavouriteLine.COLUMN_ID_LINE + " = " + ID, null, null);
                 if (c.moveToFirst()) {
-                    builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
-                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.delete_from_favourites).setTitle(R.string.delete);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dbh.deleteFavouriteLine(ID);
@@ -101,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridať");
-                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.add_to_favourites).setTitle(R.string.add);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dbh.addFavouriteLine(new FavouriteLine(1, ID));
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                return false;
+                return true;
             }
         });
     }

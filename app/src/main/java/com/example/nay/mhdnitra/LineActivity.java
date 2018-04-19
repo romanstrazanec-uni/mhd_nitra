@@ -14,7 +14,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class LineActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
     TextView tv;
@@ -53,15 +52,14 @@ public class LineActivity extends AppCompatActivity {
     }
 
     public void connectAdapter(int direction) {
-        sca = new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.line_stop_list_layout,
                 dbh.getCursor(new String[]{MyContract.LineStop.TABLE_NAME + "." + MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
                         MyContract.LineStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
                         new String[]{MyContract.LineStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
                         MyContract.LineStop.COLUMN_ID_LINE + " = " + lineId + " AND " + MyContract.LineStop.COLUMN_DIRECTION + " = " + direction,
                         null, null),
                 new String[]{MyContract.LineStop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
-                new int[]{R.id.line_stop_id, R.id.stop_name}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.line_stop_id, R.id.stop_name}, 0));
 
         tv.setText(String.format("Trasa linky %s, smer %s", getLineName(), getLastStopName()));
     }

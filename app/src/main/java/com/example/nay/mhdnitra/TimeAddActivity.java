@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class TimeAddActivity extends AppCompatActivity {
     Spinner s1, s2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

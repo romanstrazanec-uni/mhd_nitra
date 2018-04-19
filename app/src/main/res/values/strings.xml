@@ -3,15 +3,23 @@
 
     <string name="add">Pridať</string>
     <string name="add_time">Pridať čas</string>
+    <string name="add_to_favourites">Pridať medzi obľúbené?</string>
+    <string name="delete">Odstrániť</string>
+    <string name="delete_from_favourites">Odobrať z obľúbených?</string>
     <string name="favourites">Obľúbené</string>
+    <string name="line">Linka</string>
     <string name="lines">Linky</string>
     <string name="holidays">Sviatky</string>
+    <string name="no">Nie</string>
+    <string name="do_you_really_want_to_delete_this_item">Naozaj si prajete odstrániť túto položku?</string>
     <string name="reverse">Otočiť</string>
     <string name="search">Vyhľadávanie</string>
+    <string name="stop">Zastávka</string>
     <string name="stops">Zastávky</string>
     <string name="time">00:00</string>
     <string name="weekend">Víkend</string>
     <string name="workdays">Pracovné dni</string>
+    <string name="yes">Áno</string>
 
 
     <string-array name="weekend">

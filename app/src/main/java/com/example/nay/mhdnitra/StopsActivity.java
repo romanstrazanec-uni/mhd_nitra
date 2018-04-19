@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.nay.mhdnitra.Entities.FavouriteStop;
 
 public class StopsActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
     SearchView sv;
@@ -34,7 +33,7 @@ public class StopsActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.stops_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
-        tv.setText("Zastávka");
+        tv.setText(R.string.stop);
 
         connectAdapter(null);
         addOnItemClickListener();
@@ -62,11 +61,10 @@ public class StopsActivity extends AppCompatActivity {
     }
 
     public void connectAdapter(String s) {
-        sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.stop_list_layout,
                 dbh.getCursor(null, MyContract.Stop.TABLE_NAME, null, null, null, s, null, null),
                 new String[]{MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
-                new int[]{R.id.stop_id, R.id.stop_name}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.stop_id, R.id.stop_name}, 0));
     }
 
     public void addOnItemClickListener() {
@@ -97,8 +95,8 @@ public class StopsActivity extends AppCompatActivity {
                 c = dbh.getCursor(null, MyContract.FavouriteStop.TABLE_NAME, null, null, null,
                         MyContract.FavouriteStop.COLUMN_ID_STOP + " = " + ID, null, null);
                 if (c.moveToFirst()) {
-                    builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
-                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.delete_from_favourites).setTitle(R.string.delete);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dbh.deleteFavouriteStop(ID);
@@ -106,8 +104,8 @@ public class StopsActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    builder.setMessage("Pridať medzi obľúbené?").setTitle("Pridať");
-                    builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.add_to_favourites).setTitle(R.string.add);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dbh.addFavouriteStop(new FavouriteStop(1, ID));
@@ -115,7 +113,7 @@ public class StopsActivity extends AppCompatActivity {
                         }
                     });
                 }
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -123,7 +121,7 @@ public class StopsActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                return false;
+                return true;
             }
         });
     }

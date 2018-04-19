@@ -14,7 +14,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class FavouriteLinesActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
 
@@ -27,7 +26,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.favourite_line_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
-        tv.setText("Linka");
+        tv.setText(R.string.line);
 
         connectAdapter();
         addOnItemClickListener();
@@ -35,13 +34,12 @@ public class FavouriteLinesActivity extends AppCompatActivity {
     }
 
     private void connectAdapter() {
-        sca = new SimpleCursorAdapter(this, R.layout.line_list_layout,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.line_list_layout,
                 dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
                         new String[]{MyContract.FavouriteLine.COLUMN_ID_LINE}, new String[]{MyContract.Line.COLUMN_ID},
                         null, null, MyContract.Line.COLUMN_LINE),
                 new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
-                new int[]{R.id.favourite_line_id, R.id.line_id, R.id.line}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.favourite_line_id, R.id.line_id, R.id.line}, 0));
     }
 
     private void addOnItemClickListener() {
@@ -67,8 +65,8 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteLine.COLUMN_ID));
 
-                builder.setMessage("Odobrať z obľúbených?" + ID).setTitle("Odstrániť");
-                builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.delete_from_favourites).setTitle(R.string.delete);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dbh.deleteFavouriteLine(ID);
@@ -76,7 +74,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                         dialogInterface.dismiss();
                     }
                 });
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -84,7 +82,7 @@ public class FavouriteLinesActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                return false;
+                return true;
             }
         });
     }

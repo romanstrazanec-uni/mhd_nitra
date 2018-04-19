@@ -14,7 +14,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class FavouriteStopsActivity extends AppCompatActivity {
-    SimpleCursorAdapter sca;
     DBHelper dbh = new DBHelper(this);
     ListView lv;
 
@@ -27,7 +26,7 @@ public class FavouriteStopsActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.favourite_stops_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
-        tv.setText("Zastávka");
+        tv.setText(R.string.stop);
 
         connectAdapter();
         addOnItemClickListener();
@@ -35,13 +34,12 @@ public class FavouriteStopsActivity extends AppCompatActivity {
     }
 
     private void connectAdapter() {
-        sca = new SimpleCursorAdapter(this, R.layout.stop_list_layout,
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.stop_list_layout,
                 dbh.getCursor(null, MyContract.FavouriteStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
                         new String[]{MyContract.FavouriteStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
                         null, null, null),
                 new String[]{MyContract.FavouriteStop.COLUMN_ID, MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
-                new int[]{R.id.favourite_stop_id, R.id.stop_id, R.id.stop_name}, 0);
-        lv.setAdapter(sca);
+                new int[]{R.id.favourite_stop_id, R.id.stop_id, R.id.stop_name}, 0));
     }
 
     private void addOnItemClickListener() {
@@ -68,8 +66,8 @@ public class FavouriteStopsActivity extends AppCompatActivity {
                 c.moveToPosition(position);
                 final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteStop.COLUMN_ID));
 
-                builder.setMessage("Odobrať z obľúbených?").setTitle("Odstrániť");
-                builder.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.delete_from_favourites).setTitle(R.string.delete);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dbh.deleteFavouriteStop(ID);
@@ -77,7 +75,7 @@ public class FavouriteStopsActivity extends AppCompatActivity {
                         dialogInterface.dismiss();
                     }
                 });
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -85,7 +83,7 @@ public class FavouriteStopsActivity extends AppCompatActivity {
                 });
 
                 builder.show();
-                return false;
+                return true;
             }
         });
     }

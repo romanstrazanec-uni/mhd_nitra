@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemLongClickListener
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import android.widget.TextView
-import com.example.nay.mhdnitra.R
 import sk.romanstrazanec.mhdnitra.entities.FavouriteLine
 
 class LineStopsActivity : AppCompatActivity() {

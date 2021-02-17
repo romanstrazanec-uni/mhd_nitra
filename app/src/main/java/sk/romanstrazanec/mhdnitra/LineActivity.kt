@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import android.widget.TextView
-import com.example.nay.mhdnitra.R
 
 class LineActivity : AppCompatActivity() {
     var dbh = DBHelper(this)

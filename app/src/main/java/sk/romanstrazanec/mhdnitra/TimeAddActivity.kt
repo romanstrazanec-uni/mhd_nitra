@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
-import com.example.nay.mhdnitra.R
 
 class TimeAddActivity : AppCompatActivity() {
     private var s1: Spinner? = null

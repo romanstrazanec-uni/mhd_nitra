@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.AdapterView.OnItemLongClickListener
-import com.example.nay.mhdnitra.R
 import sk.romanstrazanec.mhdnitra.entities.FavouriteStop
 
 class StopsActivity : AppCompatActivity() {

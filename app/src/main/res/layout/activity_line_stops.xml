@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LineStopsActivity">
+    tools:context="sk.romanstrazanec.mhdnitra.LineStopsActivity">
 
     <TextView
         android:id="@+id/line_stops_text_view"

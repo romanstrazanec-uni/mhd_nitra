@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FavouriteLinesActivity">
+    tools:context="sk.romanstrazanec.mhdnitra.FavouriteLinesActivity">
 
     <TextView
         android:id="@+id/favourite_line_text_view"

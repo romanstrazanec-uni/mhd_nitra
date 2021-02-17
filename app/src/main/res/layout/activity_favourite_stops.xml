@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FavouriteStopsActivity">
+    tools:context="sk.romanstrazanec.mhdnitra.FavouriteStopsActivity">
 
     <TextView
         android:id="@+id/favourite_stops_text_view"

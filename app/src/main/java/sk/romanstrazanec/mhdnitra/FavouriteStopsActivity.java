@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,20 +13,22 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class FavouriteLinesActivity extends AppCompatActivity {
+import com.example.nay.mhdnitra.R;
+
+public class FavouriteStopsActivity extends AppCompatActivity {
     DBHelper dbh = new DBHelper(this);
     ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourite_lines);
+        setContentView(R.layout.activity_favourite_stops);
 
-        lv = findViewById(R.id.favourite_line_list_view);
-        TextView tv = findViewById(R.id.favourite_line_text_view);
+        lv = findViewById(R.id.favourite_stops_list_view);
+        TextView tv = findViewById(R.id.favourite_stops_text_view);
         tv.setBackgroundColor(Color.rgb(255, 230, 0));
         tv.setTextColor(Color.BLACK);
-        tv.setText(R.string.line);
+        tv.setText(R.string.stop);
 
         connectAdapter();
         addOnItemClickListener();
@@ -34,12 +36,12 @@ public class FavouriteLinesActivity extends AppCompatActivity {
     }
 
     private void connectAdapter() {
-        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.line_list_layout,
-                dbh.getCursor(null, MyContract.FavouriteLine.TABLE_NAME, new String[]{MyContract.Line.TABLE_NAME},
-                        new String[]{MyContract.FavouriteLine.COLUMN_ID_LINE}, new String[]{MyContract.Line.COLUMN_ID},
-                        null, null, MyContract.Line.COLUMN_LINE),
-                new String[]{MyContract.FavouriteLine.COLUMN_ID, MyContract.Line.COLUMN_ID, MyContract.Line.COLUMN_LINE},
-                new int[]{R.id.favourite_line_id, R.id.line_id, R.id.line}, 0));
+        lv.setAdapter(new SimpleCursorAdapter(this, R.layout.stop_list_layout,
+                dbh.getCursor(null, MyContract.FavouriteStop.TABLE_NAME, new String[]{MyContract.Stop.TABLE_NAME},
+                        new String[]{MyContract.FavouriteStop.COLUMN_ID_STOP}, new String[]{MyContract.Stop.COLUMN_ID},
+                        null, null, null),
+                new String[]{MyContract.FavouriteStop.COLUMN_ID, MyContract.Stop.COLUMN_ID, MyContract.Stop.COLUMN_NAME},
+                new int[]{R.id.favourite_stop_id, R.id.stop_id, R.id.stop_name}, 0));
     }
 
     private void addOnItemClickListener() {
@@ -48,8 +50,9 @@ public class FavouriteLinesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
-                Intent i = new Intent(FavouriteLinesActivity.this, LineActivity.class);
-                i.putExtra("line_id", c.getLong(c.getColumnIndex(MyContract.Line.COLUMN_ID)));
+                Intent i = new Intent(FavouriteStopsActivity.this, LineStopsActivity.class);
+                i.putExtra("title", c.getString(c.getColumnIndex(MyContract.Stop.COLUMN_NAME)));
+                i.putExtra("stops_id", c.getLong(c.getColumnIndex(MyContract.Stop.COLUMN_ID)));
                 startActivity(i);
             }
         });
@@ -63,13 +66,13 @@ public class FavouriteLinesActivity extends AppCompatActivity {
 
                 Cursor c = ((SimpleCursorAdapter) lv.getAdapter()).getCursor();
                 c.moveToPosition(position);
-                final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteLine.COLUMN_ID));
+                final long ID = c.getLong(c.getColumnIndex(MyContract.FavouriteStop.COLUMN_ID));
 
                 builder.setMessage(R.string.delete_from_favourites).setTitle(R.string.delete);
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        dbh.deleteFavouriteLine(ID);
+                        dbh.deleteFavouriteStop(ID);
                         connectAdapter();
                         dialogInterface.dismiss();
                     }

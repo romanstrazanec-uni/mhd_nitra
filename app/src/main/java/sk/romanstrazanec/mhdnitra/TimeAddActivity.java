@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.nay.mhdnitra.R;
 
 public class TimeAddActivity extends AppCompatActivity {
     Spinner s1, s2;
@@ -21,7 +23,6 @@ public class TimeAddActivity extends AppCompatActivity {
         connectSpinnerAdapter(s1, R.array.weekend);
         connectSpinnerAdapter(s2, R.array.holidays);
     }
-
 
     public void addTime(View view) {
         EditText et = findViewById(R.id.editText);

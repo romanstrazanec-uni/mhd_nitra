@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +16,9 @@ import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.example.nay.mhdnitra.Entities.FavouriteStop;
+import com.example.nay.mhdnitra.R;
+
+import sk.romanstrazanec.mhdnitra.entities.FavouriteStop;
 
 public class StopsActivity extends AppCompatActivity {
     DBHelper dbh = new DBHelper(this);

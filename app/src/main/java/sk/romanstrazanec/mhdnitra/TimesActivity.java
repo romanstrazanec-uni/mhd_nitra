@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +15,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.example.nay.mhdnitra.Entities.Time;
+import com.example.nay.mhdnitra.R;
+
+import sk.romanstrazanec.mhdnitra.entities.Time;
 
 public class TimesActivity extends AppCompatActivity {
     DBHelper dbh = new DBHelper(this);

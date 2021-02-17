@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra.Entities;
+package sk.romanstrazanec.mhdnitra.entities;
 
 public class Stop {
     private long ID;
@@ -9,19 +9,19 @@ public class Stop {
         this.name = name;
     }
 
-    public long getID(){
+    public long getID() {
         return this.ID;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public void setID(long ID){
+    public void setID(long ID) {
         this.ID = ID;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 }

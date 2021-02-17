@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="sk.romanstrazanec.mhdnitra.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LineActivity" />
-        <activity android:name=".StopsActivity" />
-        <activity android:name=".TimesActivity" />
-        <activity android:name=".FavouriteLinesActivity" />
-        <activity android:name=".LineStopsActivity" />
-        <activity android:name=".FavouriteStopsActivity" />
-        <activity android:name=".TimeAddActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.LineActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.StopsActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.TimesActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.FavouriteLinesActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.LineStopsActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.FavouriteStopsActivity" />
+        <activity android:name="sk.romanstrazanec.mhdnitra.TimeAddActivity" />
     </application>
 
 </manifest>

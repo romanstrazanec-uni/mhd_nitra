@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra.Entities;
+package sk.romanstrazanec.mhdnitra.entities;
 
 public class FavouriteStop {
     private long ID;

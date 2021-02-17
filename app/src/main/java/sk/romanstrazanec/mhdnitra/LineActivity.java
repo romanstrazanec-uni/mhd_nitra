@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import com.example.nay.mhdnitra.R;
 
 public class LineActivity extends AppCompatActivity {
     DBHelper dbh = new DBHelper(this);

@@ -1,27 +1,27 @@
-package com.example.nay.mhdnitra.Entities;
+package sk.romanstrazanec.mhdnitra.entities;
 
 public class Line {
     private long ID;
     private String line;
 
-    public Line(long ID, String line){
+    public Line(long ID, String line) {
         this.ID = ID;
         this.line = line;
     }
 
-    public long getID(){
+    public long getID() {
         return this.ID;
     }
 
-    public String getLine(){
+    public String getLine() {
         return this.line;
     }
 
-    public void setID(long ID){
+    public void setID(long ID) {
         this.ID = ID;
     }
 
-    public void setLine(String line){
+    public void setLine(String line) {
         this.line = line;
     }
 }

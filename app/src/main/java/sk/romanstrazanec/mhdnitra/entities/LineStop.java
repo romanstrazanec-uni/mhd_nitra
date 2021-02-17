@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra.Entities;
+package sk.romanstrazanec.mhdnitra.entities;
 
 public class LineStop {
     private long ID;
@@ -15,19 +15,19 @@ public class LineStop {
         this.direction = direction;
     }
 
-    public long getID(){
+    public long getID() {
         return this.ID;
     }
 
-    public long getIDLine(){
+    public long getIDLine() {
         return this.IDLine;
     }
 
-    public long getIDStop(){
+    public long getIDStop() {
         return this.IDStop;
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return this.number;
     }
 

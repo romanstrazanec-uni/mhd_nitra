@@ -1,4 +1,4 @@
-package com.example.nay.mhdnitra;
+package sk.romanstrazanec.mhdnitra;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,18 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nay.mhdnitra.Entities.FavouriteLine;
-import com.example.nay.mhdnitra.Entities.FavouriteStop;
-import com.example.nay.mhdnitra.Entities.Line;
-import com.example.nay.mhdnitra.Entities.LineStop;
-import com.example.nay.mhdnitra.Entities.Stop;
-import com.example.nay.mhdnitra.Entities.Time;
+import sk.romanstrazanec.mhdnitra.entities.FavouriteLine;
+import sk.romanstrazanec.mhdnitra.entities.FavouriteStop;
+import sk.romanstrazanec.mhdnitra.entities.Line;
+import sk.romanstrazanec.mhdnitra.entities.LineStop;
+import sk.romanstrazanec.mhdnitra.entities.Stop;
+import sk.romanstrazanec.mhdnitra.entities.Time;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "mhd";
 
-    public DBHelper(Context context){
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -62,20 +62,20 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private void dropTable(SQLiteDatabase db, String tableName){
+    private void dropTable(SQLiteDatabase db, String tableName) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
     }
 
-    private void createTable(SQLiteDatabase db, String tableName, String[] columns, String[] types){
+    private void createTable(SQLiteDatabase db, String tableName, String[] columns, String[] types) {
         if (columns.length != types.length) return;
 
         StringBuilder c = new StringBuilder();
-        for(int i = 0; i < columns.length; i++) {
+        for (int i = 0; i < columns.length; i++) {
             c.append(columns[i]).append(" ").append(types[i]);
             if (i != columns.length - 1) c.append(", ");
         }
 
-        String query = "CREATE TABLE " + tableName +  " (" + c + ")";
+        String query = "CREATE TABLE " + tableName + " (" + c + ")";
         db.execSQL(query);
     }
 
@@ -175,7 +175,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateLine(Line l){
+    public void updateLine(Line l) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Line.COLUMN_LINE, l.getLine());
 
@@ -184,7 +184,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateStop(Stop s){
+    public void updateStop(Stop s) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Stop.COLUMN_NAME, s.getName());
 
@@ -193,7 +193,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateLineStop(LineStop ls){
+    public void updateLineStop(LineStop ls) {
         ContentValues values = new ContentValues();
         values.put(MyContract.LineStop.COLUMN_ID_LINE, ls.getIDLine());
         values.put(MyContract.LineStop.COLUMN_ID_STOP, ls.getIDStop());
@@ -205,7 +205,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateTime(Time t){
+    public void updateTime(Time t) {
         ContentValues values = new ContentValues();
         values.put(MyContract.Time.COLUMN_ID_LINESTOP, t.getIDLineStop());
         values.put(MyContract.Time.COLUMN_MINUTE, t.getMinute());
@@ -236,25 +236,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteLine(long ID){
+    public void deleteLine(long ID) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Line.TABLE_NAME, MyContract.Line.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 
-    public void deleteStop(long ID){
+    public void deleteStop(long ID) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Stop.TABLE_NAME, MyContract.Stop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 
-    public void deleteLineStop(long ID){
+    public void deleteLineStop(long ID) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.LineStop.TABLE_NAME, MyContract.LineStop.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
     }
 
-    public void deleteTime(long ID){
+    public void deleteTime(long ID) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(MyContract.Time.TABLE_NAME, MyContract.Time.COLUMN_ID + " = ?", new String[]{String.valueOf(ID)});
         db.close();
@@ -501,7 +501,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i = 0; i < stops.length; i++) addStop(db, new Stop(i + 1, stops[i]));
 
-        long linestops[][] = new long[][]{
+        long[][] linestops = new long[][]{
                 new long[]{146, 137, 122, 125, 136, 169, 185, 147, 187, 157, 186, 174, 156, 181, 149, 158, 164}, // 1
                 new long[]{164, 158, 149, 181, 156, 174, 186, 157, 187, 147, 185, 169, 136, 125, 134, 122, 137, 146},
                 new long[]{50, 48, 34, 35, 40, 51, 38, 44, 34, 88, 43, 138, 137, 122, 143, 188, 133, 20, 169, 147, 187, 184, 176, 175, 168, 5, 6, 7, 8, 9, 10, 3, 4, 1, 2}, // 2

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MHDNitra.iml" filepath="$PROJECT_DIR$/MHDNitra.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mhd_nitra.iml" filepath="$PROJECT_DIR$/.idea/modules/mhd_nitra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mhd_nitra.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mhd_nitra.app.iml" />
     </modules>
   </component>
 </project>
